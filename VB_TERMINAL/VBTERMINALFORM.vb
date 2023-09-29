@@ -12,7 +12,7 @@ Public Class VBTERMINALFORM
     Dim PortState As Boolean
     Public receiveByte(18) As Byte 'Receive Data Bytes
 
-
+    '
     Private Sub VBTERMINALFORM_UnLoad(sender As Object, e As EventArgs) Handles MyBase.Load
         Try
             SerialPort1.Close()
@@ -138,8 +138,9 @@ Public Class VBTERMINALFORM
                 DataIn3 = receiveByte(2) 'Save Byte2
                 DataIn3 = receiveByte(3) 'Save Byte3
                 'Add data to input list box
-                InTerm.Items.Add(DataIn1 & vbTab & DataIn2 & vbTab & DataIn3 & vbTab & DataIn4)
+                InTerm.Items.Add(Chr(DataIn1) & vbTab & Chr(DataIn2) & vbTab & Chr(DataIn3) & vbTab & Chr(DataIn4))
             Catch ex As Exception
+
             End Try
 
         Else

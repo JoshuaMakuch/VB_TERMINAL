@@ -188,7 +188,7 @@ Partial Class VBTERMINALFORM
         Me.Controls.Add(Me.ScanButton)
         Me.Controls.Add(Me.PortSelect)
         Me.Name = "VBTERMINALFORM"
-        Me.Text = "Form1"
+        Me.Text = "VB Terminal Form"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
