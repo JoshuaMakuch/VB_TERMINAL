@@ -4,6 +4,7 @@
 'VB Terminal Form
 'https://github.com/JoshuaMakuch/VB_TERMINAL
 
+Imports System.Threading
 Imports System.Windows.Forms.VisualStyles.VisualStyleElement
 Imports System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar
 
@@ -12,7 +13,7 @@ Public Class VBTERMINALFORM
     Dim PortState As Boolean
     Public receiveByte(18) As Byte 'Receive Data Bytes
 
-    '
+    'On Form unload, close the port as to not have it stuck open and inaccessible
     Private Sub VBTERMINALFORM_UnLoad(sender As Object, e As EventArgs) Handles MyBase.Load
         Try
             SerialPort1.Close()
@@ -125,20 +126,30 @@ Public Class VBTERMINALFORM
         DataOut = DataTextBox.Text 'Load transmit variable with information from text box
         If PortState = True Then 'Test if port is open
             If DataOut IsNot "" Then 'Test transmit data is not blank
-                SerialPort1.Write(DataOut, 0, 1) 'Send data
+                SerialPort1.DiscardInBuffer()
+                SerialPort1.Write(DataOut) 'Send 4 bytes of data
                 OutTerm.Items.Add(DataOut) 'Log sent data
             Else 'Send Data was blank
                 Timer1.Enabled = True 'restart timer
                 Exit Sub 'Leave
             End If
             Try 'Attempt to receive
-                SerialPort1.Read(receiveByte, 0, 10) 'Read Serial Port
+
+                Thread.Sleep(100)
+                SerialPort1.Read(receiveByte, 0, 4) 'Read 4 bytes of data Serial Port
+
                 DataIn1 = receiveByte(0) 'Save Byte0
                 DataIn2 = receiveByte(1) 'Save Byte1
                 DataIn3 = receiveByte(2) 'Save Byte2
-                DataIn3 = receiveByte(3) 'Save Byte3
+                DataIn4 = receiveByte(3) 'Save Byte3
                 'Add data to input list box
                 InTerm.Items.Add(Chr(DataIn1) & vbTab & Chr(DataIn2) & vbTab & Chr(DataIn3) & vbTab & Chr(DataIn4))
+
+                'Clear the receiveByte array to ensure that when the data sent out is smaller than previously it doesnt hold onto old data
+                For n As Integer = 0 To receiveByte.Length - 1
+                    receiveByte(n) = 0
+                Next
+
             Catch ex As Exception
 
             End Try
