@@ -126,8 +126,8 @@ Public Class VBTERMINALFORM
         DataOut = DataTextBox.Text 'Load transmit variable with information from text box
         If PortState = True Then 'Test if port is open
             If DataOut IsNot "" Then 'Test transmit data is not blank
-                SerialPort1.DiscardInBuffer()
-                SerialPort1.Write(DataOut) 'Send 4 bytes of data
+                SerialPort1.DiscardInBuffer() 'Clear input buffer before sending data
+                SerialPort1.Write(DataOut) 'Send data
                 OutTerm.Items.Add(DataOut) 'Log sent data
             Else 'Send Data was blank
                 Timer1.Enabled = True 'restart timer
