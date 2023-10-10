@@ -125,6 +125,7 @@ Public Class VBTERMINALFORM
                     NewData -= 1
             End Select
 
+
             InTerm.Items.Add(Hex(Input1) & Hex(Input2) & Hex(Input3) & Hex(Input4) & Hex(Input5) & Hex(Input6) & Hex(Input7) & Hex(Input8))
 
         End If
@@ -146,6 +147,12 @@ Public Class VBTERMINALFORM
         Catch ex As Exception
             SerialPort1.PortName = PortSelect.SelectedItem ' bot Baud Rate, save port Name
         End Try
+    End Sub
+
+    'Handles the read digital inputs button
+    Private Sub ReadDigitalInputsButton_Click(sender As Object, e As EventArgs) Handles ReadDigitalInputsButton.Click
+        DataTextBox.Text = Chr(48) 'Sets the data text box to a h20 (space) to send to the QY@ board, this is a read digital inputs command.
+        SendPacketButton_Click(sender, e)
     End Sub
 
     'Handles when the select baud rate button is pressed
@@ -177,16 +184,9 @@ Public Class VBTERMINALFORM
     'Handles send packet button
     Private Sub SendPacketButton_Click(sender As Object, e As EventArgs) Handles SendPacketButton.Click
         Timer1.Enabled = False 'stop timer
-        Dim DataOut As String = "" 'Transmit Variable
-        Dim FC As Char
-        Dim SC As Char
+        Dim DataOut As String 'Transmit Variable
 
-
-        If HexRadioButton.Checked Then
-            DataOut = DataTextBox.Text
-        Else
-                DataOut = DataTextBox.Text 'Load transmit variable with information from text box
-        End If
+        DataOut = DataTextBox.Text
 
         If PortState = True Then 'Test if port is open
             If DataOut IsNot "" Then 'Test transmit data is not blank
@@ -199,6 +199,7 @@ Public Class VBTERMINALFORM
             End If
         Else
             MsgBox("Please configure and open serial port to procede") 'Failure if port is not open
+
         End If
         Timer1.Enabled = True 'restart timer 
 
@@ -250,6 +251,5 @@ Public Class VBTERMINALFORM
         NewData += 1
 
     End Sub
-
 
 End Class
