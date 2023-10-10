@@ -4,6 +4,8 @@
 'VB Terminal Form
 'https://github.com/JoshuaMakuch/VB_TERMINAL
 
+Imports System.IO
+Imports System.IO.Ports
 Imports System.Threading
 Imports System.Windows.Forms.VisualStyles.VisualStyleElement
 Imports System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar
@@ -12,6 +14,11 @@ Public Class VBTERMINALFORM
 
     Dim PortState As Boolean
     Public receiveByte(18) As Byte 'Receive Data Bytes
+
+    Dim ReceiveCount As Integer
+    Dim NewData As Integer
+    Dim DataIn1, DataIn2, DataIn3, DataIn4, DataIn5, DataIn6, DataIn7, DataIn8 As Integer
+    Dim DisplayCount
 
     'On Form unload, close the port as to not have it stuck open and inaccessible
     Private Sub VBTERMINALFORM_UnLoad(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -67,6 +74,7 @@ Public Class VBTERMINALFORM
     'Every 100mS it will update the PortData List box
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         Dim DataIn As String
+        Dim Input1, Input2, Input3, Input4, Input5, Input6, Input7, Input8 As Integer
         DataIn = ""
         PortData.Items.Clear()
         PortData.Items.Add("Com Port = " & SerialPort1.PortName) 'show current baud rate
@@ -74,6 +82,54 @@ Public Class VBTERMINALFORM
         PortData.Items.Add("Data Bits = " & SerialPort1.DataBits)
         PortData.Items.Add("Stop Bits = " & SerialPort1.StopBits)
         PortData.Items.Add("Parity = " & SerialPort1.Parity)
+
+        If NewData > 0 Then 'Test NewData if >0 there is information to display  Select Case NewData
+            Select Case NewData
+                Case = 8
+                    Input8 = DataIn8
+                    NewData -= 1
+            End Select
+            Select Case NewData
+                Case = 7
+                    Input7 = DataIn7
+                    NewData -= 1
+            End Select
+            Select Case NewData
+                Case = 6
+                    Input6 = DataIn6
+                    NewData -= 1
+            End Select
+            Select Case NewData
+                Case = 5
+                    Input5 = DataIn5
+                    NewData -= 1
+            End Select
+            Select Case NewData
+                Case = 4
+                    Input4 = DataIn4
+                    NewData -= 1
+            End Select
+            Select Case NewData
+                Case = 3
+                    Input3 = DataIn3
+                    NewData -= 1
+            End Select
+            Select Case NewData
+                Case = 2
+                    Input2 = DataIn2
+                    NewData -= 1
+            End Select
+            Select Case NewData
+                Case = 1
+                    Input1 = DataIn1
+                    NewData -= 1
+            End Select
+
+            InTerm.Items.Add(Hex(Input1) & Hex(Input2) & Hex(Input3) & Hex(Input4) & Hex(Input5) & Hex(Input6) & Hex(Input7) & Hex(Input8))
+
+        End If
+
+
     End Sub
 
     'This is what will set the port when the user clicks on something in the Port Select
@@ -121,9 +177,17 @@ Public Class VBTERMINALFORM
     'Handles send packet button
     Private Sub SendPacketButton_Click(sender As Object, e As EventArgs) Handles SendPacketButton.Click
         Timer1.Enabled = False 'stop timer
-        Dim DataOut 'Transmit Variable
-        Dim DataIn1, DataIn2, DataIn3, DataIn4 As Integer 'Receive Variables
-        DataOut = DataTextBox.Text 'Load transmit variable with information from text box
+        Dim DataOut As String = "" 'Transmit Variable
+        Dim FC As Char
+        Dim SC As Char
+
+
+        If HexRadioButton.Checked Then
+            DataOut = DataTextBox.Text
+        Else
+                DataOut = DataTextBox.Text 'Load transmit variable with information from text box
+        End If
+
         If PortState = True Then 'Test if port is open
             If DataOut IsNot "" Then 'Test transmit data is not blank
                 SerialPort1.DiscardInBuffer() 'Clear input buffer before sending data
@@ -133,27 +197,6 @@ Public Class VBTERMINALFORM
                 Timer1.Enabled = True 'restart timer
                 Exit Sub 'Leave
             End If
-            Try 'Attempt to receive
-
-                Thread.Sleep(100)
-                SerialPort1.Read(receiveByte, 0, 4) 'Read 4 bytes of data Serial Port
-
-                DataIn1 = receiveByte(0) 'Save Byte0
-                DataIn2 = receiveByte(1) 'Save Byte1
-                DataIn3 = receiveByte(2) 'Save Byte2
-                DataIn4 = receiveByte(3) 'Save Byte3
-                'Add data to input list box
-                InTerm.Items.Add(Chr(DataIn1) & vbTab & Chr(DataIn2) & vbTab & Chr(DataIn3) & vbTab & Chr(DataIn4))
-
-                'Clear the receiveByte array to ensure that when the data sent out is smaller than previously it doesnt hold onto old data
-                For n As Integer = 0 To receiveByte.Length - 1
-                    receiveByte(n) = 0
-                Next
-
-            Catch ex As Exception
-
-            End Try
-
         Else
             MsgBox("Please configure and open serial port to procede") 'Failure if port is not open
         End If
@@ -176,5 +219,37 @@ Public Class VBTERMINALFORM
     Private Sub InputClearButton_Click(sender As Object, e As EventArgs) Handles InputClearButton.Click
         InTerm.Items.Clear()
     End Sub
+
+    'Whenever the com port says we have information
+    Private Sub SerialPort1_DataReceived(sender As Object, e As SerialDataReceivedEventArgs) Handles SerialPort1.DataReceived
+
+        SerialPort1.Read(receiveByte, 0, 4)
+
+        Select Case NewData
+            Case = 0
+                DataIn1 = receiveByte(0)
+            Case = 1
+                DataIn2 = receiveByte(0)
+            Case = 2
+                DataIn3 = receiveByte(0)
+            Case = 3
+                DataIn4 = receiveByte(0)
+            Case = 4
+                DataIn5 = receiveByte(0)
+            Case = 5
+                DataIn6 = receiveByte(0)
+            Case = 6
+                DataIn7 = receiveByte(0)
+            Case = 7
+                DataIn8 = receiveByte(0)
+            Case Else
+                NewData = 0
+                Exit Sub
+        End Select
+
+        NewData += 1
+
+    End Sub
+
 
 End Class

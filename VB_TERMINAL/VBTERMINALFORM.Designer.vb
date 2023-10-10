@@ -39,7 +39,12 @@ Partial Class VBTERMINALFORM
         Me.InTerm = New System.Windows.Forms.ListBox()
         Me.OutputClearButton = New System.Windows.Forms.Button()
         Me.InputClearButton = New System.Windows.Forms.Button()
+        Me.HexRadioButton = New System.Windows.Forms.RadioButton()
+        Me.ASCIIRadioButton = New System.Windows.Forms.RadioButton()
         Me.SuspendLayout()
+        '
+        'SerialPort1
+        '
         '
         'Timer1
         '
@@ -168,11 +173,36 @@ Partial Class VBTERMINALFORM
         Me.InputClearButton.Text = "Clear"
         Me.InputClearButton.UseVisualStyleBackColor = True
         '
+        'HexRadioButton
+        '
+        Me.HexRadioButton.AutoSize = True
+        Me.HexRadioButton.Checked = True
+        Me.HexRadioButton.Location = New System.Drawing.Point(722, 62)
+        Me.HexRadioButton.Name = "HexRadioButton"
+        Me.HexRadioButton.Size = New System.Drawing.Size(52, 20)
+        Me.HexRadioButton.TabIndex = 14
+        Me.HexRadioButton.TabStop = True
+        Me.HexRadioButton.Text = "Hex"
+        Me.HexRadioButton.UseVisualStyleBackColor = True
+        '
+        'ASCIIRadioButton
+        '
+        Me.ASCIIRadioButton.AutoSize = True
+        Me.ASCIIRadioButton.Location = New System.Drawing.Point(722, 84)
+        Me.ASCIIRadioButton.Name = "ASCIIRadioButton"
+        Me.ASCIIRadioButton.Size = New System.Drawing.Size(61, 20)
+        Me.ASCIIRadioButton.TabIndex = 15
+        Me.ASCIIRadioButton.TabStop = True
+        Me.ASCIIRadioButton.Text = "ASCII"
+        Me.ASCIIRadioButton.UseVisualStyleBackColor = True
+        '
         'VBTERMINALFORM
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(903, 534)
+        Me.Controls.Add(Me.ASCIIRadioButton)
+        Me.Controls.Add(Me.HexRadioButton)
         Me.Controls.Add(Me.InputClearButton)
         Me.Controls.Add(Me.OutputClearButton)
         Me.Controls.Add(Me.InTerm)
@@ -210,4 +240,6 @@ Partial Class VBTERMINALFORM
     Friend WithEvents InTerm As ListBox
     Friend WithEvents OutputClearButton As Button
     Friend WithEvents InputClearButton As Button
+    Friend WithEvents HexRadioButton As RadioButton
+    Friend WithEvents ASCIIRadioButton As RadioButton
 End Class
