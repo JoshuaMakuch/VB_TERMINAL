@@ -39,33 +39,38 @@ Partial Class VBTERMINALFORM
         Me.InTerm = New System.Windows.Forms.ListBox()
         Me.OutputClearButton = New System.Windows.Forms.Button()
         Me.InputClearButton = New System.Windows.Forms.Button()
-        Me.DecimalRadioButton = New System.Windows.Forms.RadioButton()
-        Me.ASCIIRadioButton = New System.Windows.Forms.RadioButton()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.SettingsTab = New System.Windows.Forms.TabPage()
         Me.QYTab = New System.Windows.Forms.TabPage()
-        Me.ReadDigitalInputsButton = New System.Windows.Forms.Button()
+        Me.AnalogOutputCountLabel = New System.Windows.Forms.Label()
+        Me.AnalogOutputBarLabel = New System.Windows.Forms.Label()
+        Me.AnalogOutputBar = New System.Windows.Forms.TrackBar()
+        Me.DigitalOutputsGroupBox = New System.Windows.Forms.GroupBox()
+        Me.DigitalWriteCheckBox0 = New System.Windows.Forms.CheckBox()
+        Me.DigitalWriteCheckBox1 = New System.Windows.Forms.CheckBox()
+        Me.DigitalWriteCheckBox2 = New System.Windows.Forms.CheckBox()
+        Me.DigitalWriteCheckBox3 = New System.Windows.Forms.CheckBox()
+        Me.DigitalWriteCheckBox4 = New System.Windows.Forms.CheckBox()
+        Me.DigitalWriteCheckBox5 = New System.Windows.Forms.CheckBox()
+        Me.DigitalWriteCheckBox6 = New System.Windows.Forms.CheckBox()
+        Me.DigitalWriteCheckBox7 = New System.Windows.Forms.CheckBox()
+        Me.ReadDigitalInputsGroupBox = New System.Windows.Forms.GroupBox()
         Me.ReadDigitalCheckbox0 = New System.Windows.Forms.CheckBox()
         Me.ReadDigitalCheckbox1 = New System.Windows.Forms.CheckBox()
-        Me.ReadDigitalCheckbox3 = New System.Windows.Forms.CheckBox()
         Me.ReadDigitalCheckbox2 = New System.Windows.Forms.CheckBox()
-        Me.ReadDigitalCheckbox6 = New System.Windows.Forms.CheckBox()
-        Me.ReadDigitalCheckbox5 = New System.Windows.Forms.CheckBox()
+        Me.ReadDigitalCheckbox3 = New System.Windows.Forms.CheckBox()
         Me.ReadDigitalCheckbox4 = New System.Windows.Forms.CheckBox()
-        Me.CheckBox8 = New System.Windows.Forms.CheckBox()
-        Me.WriteDigitalOutputsButton = New System.Windows.Forms.Button()
-        Me.CheckBox9 = New System.Windows.Forms.CheckBox()
-        Me.CheckBox10 = New System.Windows.Forms.CheckBox()
-        Me.CheckBox11 = New System.Windows.Forms.CheckBox()
-        Me.CheckBox12 = New System.Windows.Forms.CheckBox()
-        Me.CheckBox13 = New System.Windows.Forms.CheckBox()
-        Me.CheckBox14 = New System.Windows.Forms.CheckBox()
-        Me.CheckBox15 = New System.Windows.Forms.CheckBox()
-        Me.ReadDigitalInputsGroupBox = New System.Windows.Forms.GroupBox()
+        Me.ReadDigitalCheckbox5 = New System.Windows.Forms.CheckBox()
+        Me.ReadDigitalCheckbox6 = New System.Windows.Forms.CheckBox()
         Me.ReadDigitalCheckbox7 = New System.Windows.Forms.CheckBox()
+        Me.WriteDigitalOutputsButton = New System.Windows.Forms.Button()
+        Me.ReadDigitalInputsButton = New System.Windows.Forms.Button()
+        Me.AnalogOutputCountVoltageLabel = New System.Windows.Forms.Label()
         Me.TabControl1.SuspendLayout()
         Me.SettingsTab.SuspendLayout()
         Me.QYTab.SuspendLayout()
+        CType(Me.AnalogOutputBar, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.DigitalOutputsGroupBox.SuspendLayout()
         Me.ReadDigitalInputsGroupBox.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -199,29 +204,6 @@ Partial Class VBTERMINALFORM
         Me.InputClearButton.Text = "Clear"
         Me.InputClearButton.UseVisualStyleBackColor = True
         '
-        'DecimalRadioButton
-        '
-        Me.DecimalRadioButton.AutoSize = True
-        Me.DecimalRadioButton.Checked = True
-        Me.DecimalRadioButton.Location = New System.Drawing.Point(716, 64)
-        Me.DecimalRadioButton.Name = "DecimalRadioButton"
-        Me.DecimalRadioButton.Size = New System.Drawing.Size(78, 20)
-        Me.DecimalRadioButton.TabIndex = 14
-        Me.DecimalRadioButton.TabStop = True
-        Me.DecimalRadioButton.Text = "Decimal"
-        Me.DecimalRadioButton.UseVisualStyleBackColor = True
-        '
-        'ASCIIRadioButton
-        '
-        Me.ASCIIRadioButton.AutoSize = True
-        Me.ASCIIRadioButton.Location = New System.Drawing.Point(716, 86)
-        Me.ASCIIRadioButton.Name = "ASCIIRadioButton"
-        Me.ASCIIRadioButton.Size = New System.Drawing.Size(61, 20)
-        Me.ASCIIRadioButton.TabIndex = 15
-        Me.ASCIIRadioButton.TabStop = True
-        Me.ASCIIRadioButton.Text = "ASCII"
-        Me.ASCIIRadioButton.UseVisualStyleBackColor = True
-        '
         'TabControl1
         '
         Me.TabControl1.Controls.Add(Me.SettingsTab)
@@ -236,9 +218,7 @@ Partial Class VBTERMINALFORM
         '
         Me.SettingsTab.Controls.Add(Me.PortOpen)
         Me.SettingsTab.Controls.Add(Me.DataPacketTextBox)
-        Me.SettingsTab.Controls.Add(Me.ASCIIRadioButton)
         Me.SettingsTab.Controls.Add(Me.PortSelect)
-        Me.SettingsTab.Controls.Add(Me.DecimalRadioButton)
         Me.SettingsTab.Controls.Add(Me.ScanButton)
         Me.SettingsTab.Controls.Add(Me.InputClearButton)
         Me.SettingsTab.Controls.Add(Me.PortData)
@@ -260,16 +240,13 @@ Partial Class VBTERMINALFORM
         '
         'QYTab
         '
+        Me.QYTab.Controls.Add(Me.AnalogOutputCountVoltageLabel)
+        Me.QYTab.Controls.Add(Me.AnalogOutputCountLabel)
+        Me.QYTab.Controls.Add(Me.AnalogOutputBarLabel)
+        Me.QYTab.Controls.Add(Me.AnalogOutputBar)
+        Me.QYTab.Controls.Add(Me.DigitalOutputsGroupBox)
         Me.QYTab.Controls.Add(Me.ReadDigitalInputsGroupBox)
-        Me.QYTab.Controls.Add(Me.CheckBox8)
         Me.QYTab.Controls.Add(Me.WriteDigitalOutputsButton)
-        Me.QYTab.Controls.Add(Me.CheckBox9)
-        Me.QYTab.Controls.Add(Me.CheckBox10)
-        Me.QYTab.Controls.Add(Me.CheckBox11)
-        Me.QYTab.Controls.Add(Me.CheckBox12)
-        Me.QYTab.Controls.Add(Me.CheckBox13)
-        Me.QYTab.Controls.Add(Me.CheckBox14)
-        Me.QYTab.Controls.Add(Me.CheckBox15)
         Me.QYTab.Controls.Add(Me.ReadDigitalInputsButton)
         Me.QYTab.Location = New System.Drawing.Point(4, 25)
         Me.QYTab.Name = "QYTab"
@@ -279,203 +256,138 @@ Partial Class VBTERMINALFORM
         Me.QYTab.Text = "QY@ Board Control"
         Me.QYTab.UseVisualStyleBackColor = True
         '
-        'ReadDigitalInputsButton
+        'AnalogOutputCountLabel
         '
-        Me.ReadDigitalInputsButton.Location = New System.Drawing.Point(6, 69)
-        Me.ReadDigitalInputsButton.Name = "ReadDigitalInputsButton"
-        Me.ReadDigitalInputsButton.Size = New System.Drawing.Size(137, 69)
-        Me.ReadDigitalInputsButton.TabIndex = 1
-        Me.ReadDigitalInputsButton.Text = "Read Digital Inputs"
-        Me.ReadDigitalInputsButton.UseVisualStyleBackColor = True
+        Me.AnalogOutputCountLabel.AutoSize = True
+        Me.AnalogOutputCountLabel.Location = New System.Drawing.Point(362, 271)
+        Me.AnalogOutputCountLabel.Name = "AnalogOutputCountLabel"
+        Me.AnalogOutputCountLabel.Size = New System.Drawing.Size(129, 16)
+        Me.AnalogOutputCountLabel.TabIndex = 22
+        Me.AnalogOutputCountLabel.Text = "Analog Output Value"
         '
-        'ReadDigitalCheckbox0
+        'AnalogOutputBarLabel
         '
-        Me.ReadDigitalCheckbox0.Appearance = System.Windows.Forms.Appearance.Button
-        Me.ReadDigitalCheckbox0.Enabled = False
-        Me.ReadDigitalCheckbox0.Location = New System.Drawing.Point(6, 21)
-        Me.ReadDigitalCheckbox0.MaximumSize = New System.Drawing.Size(50, 50)
-        Me.ReadDigitalCheckbox0.Name = "ReadDigitalCheckbox0"
-        Me.ReadDigitalCheckbox0.Size = New System.Drawing.Size(25, 25)
-        Me.ReadDigitalCheckbox0.TabIndex = 0
-        Me.ReadDigitalCheckbox0.TabStop = False
-        Me.ReadDigitalCheckbox0.UseVisualStyleBackColor = True
+        Me.AnalogOutputBarLabel.AutoSize = True
+        Me.AnalogOutputBarLabel.Location = New System.Drawing.Point(362, 193)
+        Me.AnalogOutputBarLabel.Name = "AnalogOutputBarLabel"
+        Me.AnalogOutputBarLabel.Size = New System.Drawing.Size(91, 16)
+        Me.AnalogOutputBarLabel.TabIndex = 21
+        Me.AnalogOutputBarLabel.Text = "Analog Output"
         '
-        'ReadDigitalCheckbox1
+        'AnalogOutputBar
         '
-        Me.ReadDigitalCheckbox1.Appearance = System.Windows.Forms.Appearance.Button
-        Me.ReadDigitalCheckbox1.Enabled = False
-        Me.ReadDigitalCheckbox1.Location = New System.Drawing.Point(37, 21)
-        Me.ReadDigitalCheckbox1.MaximumSize = New System.Drawing.Size(50, 50)
-        Me.ReadDigitalCheckbox1.Name = "ReadDigitalCheckbox1"
-        Me.ReadDigitalCheckbox1.Size = New System.Drawing.Size(25, 25)
-        Me.ReadDigitalCheckbox1.TabIndex = 2
-        Me.ReadDigitalCheckbox1.TabStop = False
-        Me.ReadDigitalCheckbox1.UseVisualStyleBackColor = True
+        Me.AnalogOutputBar.Location = New System.Drawing.Point(365, 212)
+        Me.AnalogOutputBar.Maximum = 1023
+        Me.AnalogOutputBar.Name = "AnalogOutputBar"
+        Me.AnalogOutputBar.Size = New System.Drawing.Size(346, 56)
+        Me.AnalogOutputBar.TabIndex = 20
         '
-        'ReadDigitalCheckbox3
+        'DigitalOutputsGroupBox
         '
-        Me.ReadDigitalCheckbox3.Appearance = System.Windows.Forms.Appearance.Button
-        Me.ReadDigitalCheckbox3.Enabled = False
-        Me.ReadDigitalCheckbox3.Location = New System.Drawing.Point(99, 21)
-        Me.ReadDigitalCheckbox3.MaximumSize = New System.Drawing.Size(50, 50)
-        Me.ReadDigitalCheckbox3.Name = "ReadDigitalCheckbox3"
-        Me.ReadDigitalCheckbox3.Size = New System.Drawing.Size(25, 25)
-        Me.ReadDigitalCheckbox3.TabIndex = 4
-        Me.ReadDigitalCheckbox3.TabStop = False
-        Me.ReadDigitalCheckbox3.UseVisualStyleBackColor = True
+        Me.DigitalOutputsGroupBox.Controls.Add(Me.DigitalWriteCheckBox0)
+        Me.DigitalOutputsGroupBox.Controls.Add(Me.DigitalWriteCheckBox1)
+        Me.DigitalOutputsGroupBox.Controls.Add(Me.DigitalWriteCheckBox2)
+        Me.DigitalOutputsGroupBox.Controls.Add(Me.DigitalWriteCheckBox3)
+        Me.DigitalOutputsGroupBox.Controls.Add(Me.DigitalWriteCheckBox4)
+        Me.DigitalOutputsGroupBox.Controls.Add(Me.DigitalWriteCheckBox5)
+        Me.DigitalOutputsGroupBox.Controls.Add(Me.DigitalWriteCheckBox6)
+        Me.DigitalOutputsGroupBox.Controls.Add(Me.DigitalWriteCheckBox7)
+        Me.DigitalOutputsGroupBox.Location = New System.Drawing.Point(266, 6)
+        Me.DigitalOutputsGroupBox.Name = "DigitalOutputsGroupBox"
+        Me.DigitalOutputsGroupBox.Size = New System.Drawing.Size(254, 57)
+        Me.DigitalOutputsGroupBox.TabIndex = 19
+        Me.DigitalOutputsGroupBox.TabStop = False
+        Me.DigitalOutputsGroupBox.Text = "Digital Outputs"
         '
-        'ReadDigitalCheckbox2
+        'DigitalWriteCheckBox0
         '
-        Me.ReadDigitalCheckbox2.Appearance = System.Windows.Forms.Appearance.Button
-        Me.ReadDigitalCheckbox2.Enabled = False
-        Me.ReadDigitalCheckbox2.Location = New System.Drawing.Point(68, 21)
-        Me.ReadDigitalCheckbox2.MaximumSize = New System.Drawing.Size(50, 50)
-        Me.ReadDigitalCheckbox2.Name = "ReadDigitalCheckbox2"
-        Me.ReadDigitalCheckbox2.Size = New System.Drawing.Size(25, 25)
-        Me.ReadDigitalCheckbox2.TabIndex = 3
-        Me.ReadDigitalCheckbox2.TabStop = False
-        Me.ReadDigitalCheckbox2.UseVisualStyleBackColor = True
+        Me.DigitalWriteCheckBox0.Appearance = System.Windows.Forms.Appearance.Button
+        Me.DigitalWriteCheckBox0.Location = New System.Drawing.Point(6, 21)
+        Me.DigitalWriteCheckBox0.MaximumSize = New System.Drawing.Size(50, 50)
+        Me.DigitalWriteCheckBox0.Name = "DigitalWriteCheckBox0"
+        Me.DigitalWriteCheckBox0.Size = New System.Drawing.Size(25, 25)
+        Me.DigitalWriteCheckBox0.TabIndex = 0
+        Me.DigitalWriteCheckBox0.TabStop = False
+        Me.DigitalWriteCheckBox0.Text = "MSB"
+        Me.DigitalWriteCheckBox0.UseVisualStyleBackColor = True
         '
-        'ReadDigitalCheckbox6
+        'DigitalWriteCheckBox1
         '
-        Me.ReadDigitalCheckbox6.Appearance = System.Windows.Forms.Appearance.Button
-        Me.ReadDigitalCheckbox6.Enabled = False
-        Me.ReadDigitalCheckbox6.Location = New System.Drawing.Point(192, 21)
-        Me.ReadDigitalCheckbox6.MaximumSize = New System.Drawing.Size(50, 50)
-        Me.ReadDigitalCheckbox6.Name = "ReadDigitalCheckbox6"
-        Me.ReadDigitalCheckbox6.Size = New System.Drawing.Size(25, 25)
-        Me.ReadDigitalCheckbox6.TabIndex = 7
-        Me.ReadDigitalCheckbox6.TabStop = False
-        Me.ReadDigitalCheckbox6.UseVisualStyleBackColor = True
+        Me.DigitalWriteCheckBox1.Appearance = System.Windows.Forms.Appearance.Button
+        Me.DigitalWriteCheckBox1.Location = New System.Drawing.Point(37, 21)
+        Me.DigitalWriteCheckBox1.MaximumSize = New System.Drawing.Size(50, 50)
+        Me.DigitalWriteCheckBox1.Name = "DigitalWriteCheckBox1"
+        Me.DigitalWriteCheckBox1.Size = New System.Drawing.Size(25, 25)
+        Me.DigitalWriteCheckBox1.TabIndex = 2
+        Me.DigitalWriteCheckBox1.TabStop = False
+        Me.DigitalWriteCheckBox1.UseVisualStyleBackColor = True
         '
-        'ReadDigitalCheckbox5
+        'DigitalWriteCheckBox2
         '
-        Me.ReadDigitalCheckbox5.Appearance = System.Windows.Forms.Appearance.Button
-        Me.ReadDigitalCheckbox5.Enabled = False
-        Me.ReadDigitalCheckbox5.Location = New System.Drawing.Point(161, 21)
-        Me.ReadDigitalCheckbox5.MaximumSize = New System.Drawing.Size(50, 50)
-        Me.ReadDigitalCheckbox5.Name = "ReadDigitalCheckbox5"
-        Me.ReadDigitalCheckbox5.Size = New System.Drawing.Size(25, 25)
-        Me.ReadDigitalCheckbox5.TabIndex = 6
-        Me.ReadDigitalCheckbox5.TabStop = False
-        Me.ReadDigitalCheckbox5.UseVisualStyleBackColor = True
+        Me.DigitalWriteCheckBox2.Appearance = System.Windows.Forms.Appearance.Button
+        Me.DigitalWriteCheckBox2.Location = New System.Drawing.Point(68, 21)
+        Me.DigitalWriteCheckBox2.MaximumSize = New System.Drawing.Size(50, 50)
+        Me.DigitalWriteCheckBox2.Name = "DigitalWriteCheckBox2"
+        Me.DigitalWriteCheckBox2.Size = New System.Drawing.Size(25, 25)
+        Me.DigitalWriteCheckBox2.TabIndex = 3
+        Me.DigitalWriteCheckBox2.TabStop = False
+        Me.DigitalWriteCheckBox2.UseVisualStyleBackColor = True
         '
-        'ReadDigitalCheckbox4
+        'DigitalWriteCheckBox3
         '
-        Me.ReadDigitalCheckbox4.Appearance = System.Windows.Forms.Appearance.Button
-        Me.ReadDigitalCheckbox4.Enabled = False
-        Me.ReadDigitalCheckbox4.Location = New System.Drawing.Point(130, 21)
-        Me.ReadDigitalCheckbox4.MaximumSize = New System.Drawing.Size(50, 50)
-        Me.ReadDigitalCheckbox4.Name = "ReadDigitalCheckbox4"
-        Me.ReadDigitalCheckbox4.Size = New System.Drawing.Size(25, 25)
-        Me.ReadDigitalCheckbox4.TabIndex = 5
-        Me.ReadDigitalCheckbox4.TabStop = False
-        Me.ReadDigitalCheckbox4.UseVisualStyleBackColor = True
+        Me.DigitalWriteCheckBox3.Appearance = System.Windows.Forms.Appearance.Button
+        Me.DigitalWriteCheckBox3.Location = New System.Drawing.Point(99, 21)
+        Me.DigitalWriteCheckBox3.MaximumSize = New System.Drawing.Size(50, 50)
+        Me.DigitalWriteCheckBox3.Name = "DigitalWriteCheckBox3"
+        Me.DigitalWriteCheckBox3.Size = New System.Drawing.Size(25, 25)
+        Me.DigitalWriteCheckBox3.TabIndex = 4
+        Me.DigitalWriteCheckBox3.TabStop = False
+        Me.DigitalWriteCheckBox3.UseVisualStyleBackColor = True
         '
-        'CheckBox8
+        'DigitalWriteCheckBox4
         '
-        Me.CheckBox8.Appearance = System.Windows.Forms.Appearance.Button
-        Me.CheckBox8.Enabled = False
-        Me.CheckBox8.Location = New System.Drawing.Point(259, 308)
-        Me.CheckBox8.MaximumSize = New System.Drawing.Size(50, 50)
-        Me.CheckBox8.Name = "CheckBox8"
-        Me.CheckBox8.Size = New System.Drawing.Size(25, 25)
-        Me.CheckBox8.TabIndex = 17
-        Me.CheckBox8.TabStop = False
-        Me.CheckBox8.UseVisualStyleBackColor = True
+        Me.DigitalWriteCheckBox4.Appearance = System.Windows.Forms.Appearance.Button
+        Me.DigitalWriteCheckBox4.Location = New System.Drawing.Point(130, 21)
+        Me.DigitalWriteCheckBox4.MaximumSize = New System.Drawing.Size(50, 50)
+        Me.DigitalWriteCheckBox4.Name = "DigitalWriteCheckBox4"
+        Me.DigitalWriteCheckBox4.Size = New System.Drawing.Size(25, 25)
+        Me.DigitalWriteCheckBox4.TabIndex = 5
+        Me.DigitalWriteCheckBox4.TabStop = False
+        Me.DigitalWriteCheckBox4.UseVisualStyleBackColor = True
         '
-        'WriteDigitalOutputsButton
+        'DigitalWriteCheckBox5
         '
-        Me.WriteDigitalOutputsButton.Location = New System.Drawing.Point(42, 339)
-        Me.WriteDigitalOutputsButton.Name = "WriteDigitalOutputsButton"
-        Me.WriteDigitalOutputsButton.Size = New System.Drawing.Size(137, 69)
-        Me.WriteDigitalOutputsButton.TabIndex = 10
-        Me.WriteDigitalOutputsButton.Text = "Write Digital Outputs"
-        Me.WriteDigitalOutputsButton.UseVisualStyleBackColor = True
+        Me.DigitalWriteCheckBox5.Appearance = System.Windows.Forms.Appearance.Button
+        Me.DigitalWriteCheckBox5.Location = New System.Drawing.Point(161, 21)
+        Me.DigitalWriteCheckBox5.MaximumSize = New System.Drawing.Size(50, 50)
+        Me.DigitalWriteCheckBox5.Name = "DigitalWriteCheckBox5"
+        Me.DigitalWriteCheckBox5.Size = New System.Drawing.Size(25, 25)
+        Me.DigitalWriteCheckBox5.TabIndex = 6
+        Me.DigitalWriteCheckBox5.TabStop = False
+        Me.DigitalWriteCheckBox5.UseVisualStyleBackColor = True
         '
-        'CheckBox9
+        'DigitalWriteCheckBox6
         '
-        Me.CheckBox9.Appearance = System.Windows.Forms.Appearance.Button
-        Me.CheckBox9.Enabled = False
-        Me.CheckBox9.Location = New System.Drawing.Point(228, 308)
-        Me.CheckBox9.MaximumSize = New System.Drawing.Size(50, 50)
-        Me.CheckBox9.Name = "CheckBox9"
-        Me.CheckBox9.Size = New System.Drawing.Size(25, 25)
-        Me.CheckBox9.TabIndex = 16
-        Me.CheckBox9.TabStop = False
-        Me.CheckBox9.UseVisualStyleBackColor = True
+        Me.DigitalWriteCheckBox6.Appearance = System.Windows.Forms.Appearance.Button
+        Me.DigitalWriteCheckBox6.Location = New System.Drawing.Point(192, 21)
+        Me.DigitalWriteCheckBox6.MaximumSize = New System.Drawing.Size(50, 50)
+        Me.DigitalWriteCheckBox6.Name = "DigitalWriteCheckBox6"
+        Me.DigitalWriteCheckBox6.Size = New System.Drawing.Size(25, 25)
+        Me.DigitalWriteCheckBox6.TabIndex = 7
+        Me.DigitalWriteCheckBox6.TabStop = False
+        Me.DigitalWriteCheckBox6.UseVisualStyleBackColor = True
         '
-        'CheckBox10
+        'DigitalWriteCheckBox7
         '
-        Me.CheckBox10.Appearance = System.Windows.Forms.Appearance.Button
-        Me.CheckBox10.Enabled = False
-        Me.CheckBox10.Location = New System.Drawing.Point(197, 308)
-        Me.CheckBox10.MaximumSize = New System.Drawing.Size(50, 50)
-        Me.CheckBox10.Name = "CheckBox10"
-        Me.CheckBox10.Size = New System.Drawing.Size(25, 25)
-        Me.CheckBox10.TabIndex = 15
-        Me.CheckBox10.TabStop = False
-        Me.CheckBox10.UseVisualStyleBackColor = True
-        '
-        'CheckBox11
-        '
-        Me.CheckBox11.Appearance = System.Windows.Forms.Appearance.Button
-        Me.CheckBox11.Enabled = False
-        Me.CheckBox11.Location = New System.Drawing.Point(166, 308)
-        Me.CheckBox11.MaximumSize = New System.Drawing.Size(50, 50)
-        Me.CheckBox11.Name = "CheckBox11"
-        Me.CheckBox11.Size = New System.Drawing.Size(25, 25)
-        Me.CheckBox11.TabIndex = 14
-        Me.CheckBox11.TabStop = False
-        Me.CheckBox11.UseVisualStyleBackColor = True
-        '
-        'CheckBox12
-        '
-        Me.CheckBox12.Appearance = System.Windows.Forms.Appearance.Button
-        Me.CheckBox12.Enabled = False
-        Me.CheckBox12.Location = New System.Drawing.Point(135, 308)
-        Me.CheckBox12.MaximumSize = New System.Drawing.Size(50, 50)
-        Me.CheckBox12.Name = "CheckBox12"
-        Me.CheckBox12.Size = New System.Drawing.Size(25, 25)
-        Me.CheckBox12.TabIndex = 13
-        Me.CheckBox12.TabStop = False
-        Me.CheckBox12.UseVisualStyleBackColor = True
-        '
-        'CheckBox13
-        '
-        Me.CheckBox13.Appearance = System.Windows.Forms.Appearance.Button
-        Me.CheckBox13.Enabled = False
-        Me.CheckBox13.Location = New System.Drawing.Point(104, 308)
-        Me.CheckBox13.MaximumSize = New System.Drawing.Size(50, 50)
-        Me.CheckBox13.Name = "CheckBox13"
-        Me.CheckBox13.Size = New System.Drawing.Size(25, 25)
-        Me.CheckBox13.TabIndex = 12
-        Me.CheckBox13.TabStop = False
-        Me.CheckBox13.UseVisualStyleBackColor = True
-        '
-        'CheckBox14
-        '
-        Me.CheckBox14.Appearance = System.Windows.Forms.Appearance.Button
-        Me.CheckBox14.Enabled = False
-        Me.CheckBox14.Location = New System.Drawing.Point(73, 308)
-        Me.CheckBox14.MaximumSize = New System.Drawing.Size(50, 50)
-        Me.CheckBox14.Name = "CheckBox14"
-        Me.CheckBox14.Size = New System.Drawing.Size(25, 25)
-        Me.CheckBox14.TabIndex = 11
-        Me.CheckBox14.TabStop = False
-        Me.CheckBox14.UseVisualStyleBackColor = True
-        '
-        'CheckBox15
-        '
-        Me.CheckBox15.Appearance = System.Windows.Forms.Appearance.Button
-        Me.CheckBox15.Enabled = False
-        Me.CheckBox15.Location = New System.Drawing.Point(42, 308)
-        Me.CheckBox15.MaximumSize = New System.Drawing.Size(50, 50)
-        Me.CheckBox15.Name = "CheckBox15"
-        Me.CheckBox15.Size = New System.Drawing.Size(25, 25)
-        Me.CheckBox15.TabIndex = 9
-        Me.CheckBox15.TabStop = False
-        Me.CheckBox15.UseVisualStyleBackColor = True
+        Me.DigitalWriteCheckBox7.Appearance = System.Windows.Forms.Appearance.Button
+        Me.DigitalWriteCheckBox7.Location = New System.Drawing.Point(223, 21)
+        Me.DigitalWriteCheckBox7.MaximumSize = New System.Drawing.Size(50, 50)
+        Me.DigitalWriteCheckBox7.Name = "DigitalWriteCheckBox7"
+        Me.DigitalWriteCheckBox7.Size = New System.Drawing.Size(25, 25)
+        Me.DigitalWriteCheckBox7.TabIndex = 8
+        Me.DigitalWriteCheckBox7.TabStop = False
+        Me.DigitalWriteCheckBox7.Text = "LSB"
+        Me.DigitalWriteCheckBox7.UseVisualStyleBackColor = True
         '
         'ReadDigitalInputsGroupBox
         '
@@ -494,6 +406,91 @@ Partial Class VBTERMINALFORM
         Me.ReadDigitalInputsGroupBox.TabStop = False
         Me.ReadDigitalInputsGroupBox.Text = "Digital Inputs"
         '
+        'ReadDigitalCheckbox0
+        '
+        Me.ReadDigitalCheckbox0.Appearance = System.Windows.Forms.Appearance.Button
+        Me.ReadDigitalCheckbox0.Enabled = False
+        Me.ReadDigitalCheckbox0.Location = New System.Drawing.Point(6, 21)
+        Me.ReadDigitalCheckbox0.MaximumSize = New System.Drawing.Size(50, 50)
+        Me.ReadDigitalCheckbox0.Name = "ReadDigitalCheckbox0"
+        Me.ReadDigitalCheckbox0.Size = New System.Drawing.Size(25, 25)
+        Me.ReadDigitalCheckbox0.TabIndex = 0
+        Me.ReadDigitalCheckbox0.TabStop = False
+        Me.ReadDigitalCheckbox0.Text = "MSB"
+        Me.ReadDigitalCheckbox0.UseVisualStyleBackColor = True
+        '
+        'ReadDigitalCheckbox1
+        '
+        Me.ReadDigitalCheckbox1.Appearance = System.Windows.Forms.Appearance.Button
+        Me.ReadDigitalCheckbox1.Enabled = False
+        Me.ReadDigitalCheckbox1.Location = New System.Drawing.Point(37, 21)
+        Me.ReadDigitalCheckbox1.MaximumSize = New System.Drawing.Size(50, 50)
+        Me.ReadDigitalCheckbox1.Name = "ReadDigitalCheckbox1"
+        Me.ReadDigitalCheckbox1.Size = New System.Drawing.Size(25, 25)
+        Me.ReadDigitalCheckbox1.TabIndex = 2
+        Me.ReadDigitalCheckbox1.TabStop = False
+        Me.ReadDigitalCheckbox1.UseVisualStyleBackColor = True
+        '
+        'ReadDigitalCheckbox2
+        '
+        Me.ReadDigitalCheckbox2.Appearance = System.Windows.Forms.Appearance.Button
+        Me.ReadDigitalCheckbox2.Enabled = False
+        Me.ReadDigitalCheckbox2.Location = New System.Drawing.Point(68, 21)
+        Me.ReadDigitalCheckbox2.MaximumSize = New System.Drawing.Size(50, 50)
+        Me.ReadDigitalCheckbox2.Name = "ReadDigitalCheckbox2"
+        Me.ReadDigitalCheckbox2.Size = New System.Drawing.Size(25, 25)
+        Me.ReadDigitalCheckbox2.TabIndex = 3
+        Me.ReadDigitalCheckbox2.TabStop = False
+        Me.ReadDigitalCheckbox2.UseVisualStyleBackColor = True
+        '
+        'ReadDigitalCheckbox3
+        '
+        Me.ReadDigitalCheckbox3.Appearance = System.Windows.Forms.Appearance.Button
+        Me.ReadDigitalCheckbox3.Enabled = False
+        Me.ReadDigitalCheckbox3.Location = New System.Drawing.Point(99, 21)
+        Me.ReadDigitalCheckbox3.MaximumSize = New System.Drawing.Size(50, 50)
+        Me.ReadDigitalCheckbox3.Name = "ReadDigitalCheckbox3"
+        Me.ReadDigitalCheckbox3.Size = New System.Drawing.Size(25, 25)
+        Me.ReadDigitalCheckbox3.TabIndex = 4
+        Me.ReadDigitalCheckbox3.TabStop = False
+        Me.ReadDigitalCheckbox3.UseVisualStyleBackColor = True
+        '
+        'ReadDigitalCheckbox4
+        '
+        Me.ReadDigitalCheckbox4.Appearance = System.Windows.Forms.Appearance.Button
+        Me.ReadDigitalCheckbox4.Enabled = False
+        Me.ReadDigitalCheckbox4.Location = New System.Drawing.Point(130, 21)
+        Me.ReadDigitalCheckbox4.MaximumSize = New System.Drawing.Size(50, 50)
+        Me.ReadDigitalCheckbox4.Name = "ReadDigitalCheckbox4"
+        Me.ReadDigitalCheckbox4.Size = New System.Drawing.Size(25, 25)
+        Me.ReadDigitalCheckbox4.TabIndex = 5
+        Me.ReadDigitalCheckbox4.TabStop = False
+        Me.ReadDigitalCheckbox4.UseVisualStyleBackColor = True
+        '
+        'ReadDigitalCheckbox5
+        '
+        Me.ReadDigitalCheckbox5.Appearance = System.Windows.Forms.Appearance.Button
+        Me.ReadDigitalCheckbox5.Enabled = False
+        Me.ReadDigitalCheckbox5.Location = New System.Drawing.Point(161, 21)
+        Me.ReadDigitalCheckbox5.MaximumSize = New System.Drawing.Size(50, 50)
+        Me.ReadDigitalCheckbox5.Name = "ReadDigitalCheckbox5"
+        Me.ReadDigitalCheckbox5.Size = New System.Drawing.Size(25, 25)
+        Me.ReadDigitalCheckbox5.TabIndex = 6
+        Me.ReadDigitalCheckbox5.TabStop = False
+        Me.ReadDigitalCheckbox5.UseVisualStyleBackColor = True
+        '
+        'ReadDigitalCheckbox6
+        '
+        Me.ReadDigitalCheckbox6.Appearance = System.Windows.Forms.Appearance.Button
+        Me.ReadDigitalCheckbox6.Enabled = False
+        Me.ReadDigitalCheckbox6.Location = New System.Drawing.Point(192, 21)
+        Me.ReadDigitalCheckbox6.MaximumSize = New System.Drawing.Size(50, 50)
+        Me.ReadDigitalCheckbox6.Name = "ReadDigitalCheckbox6"
+        Me.ReadDigitalCheckbox6.Size = New System.Drawing.Size(25, 25)
+        Me.ReadDigitalCheckbox6.TabIndex = 7
+        Me.ReadDigitalCheckbox6.TabStop = False
+        Me.ReadDigitalCheckbox6.UseVisualStyleBackColor = True
+        '
         'ReadDigitalCheckbox7
         '
         Me.ReadDigitalCheckbox7.Appearance = System.Windows.Forms.Appearance.Button
@@ -504,13 +501,41 @@ Partial Class VBTERMINALFORM
         Me.ReadDigitalCheckbox7.Size = New System.Drawing.Size(25, 25)
         Me.ReadDigitalCheckbox7.TabIndex = 8
         Me.ReadDigitalCheckbox7.TabStop = False
+        Me.ReadDigitalCheckbox7.Text = "L"
         Me.ReadDigitalCheckbox7.UseVisualStyleBackColor = True
+        '
+        'WriteDigitalOutputsButton
+        '
+        Me.WriteDigitalOutputsButton.Location = New System.Drawing.Point(265, 69)
+        Me.WriteDigitalOutputsButton.Name = "WriteDigitalOutputsButton"
+        Me.WriteDigitalOutputsButton.Size = New System.Drawing.Size(137, 69)
+        Me.WriteDigitalOutputsButton.TabIndex = 10
+        Me.WriteDigitalOutputsButton.Text = "Write Digital Outputs"
+        Me.WriteDigitalOutputsButton.UseVisualStyleBackColor = True
+        '
+        'ReadDigitalInputsButton
+        '
+        Me.ReadDigitalInputsButton.Location = New System.Drawing.Point(6, 69)
+        Me.ReadDigitalInputsButton.Name = "ReadDigitalInputsButton"
+        Me.ReadDigitalInputsButton.Size = New System.Drawing.Size(137, 69)
+        Me.ReadDigitalInputsButton.TabIndex = 1
+        Me.ReadDigitalInputsButton.Text = "Read Digital Inputs"
+        Me.ReadDigitalInputsButton.UseVisualStyleBackColor = True
+        '
+        'AnalogOutputCountVoltageLabel
+        '
+        Me.AnalogOutputCountVoltageLabel.AutoSize = True
+        Me.AnalogOutputCountVoltageLabel.Location = New System.Drawing.Point(362, 287)
+        Me.AnalogOutputCountVoltageLabel.Name = "AnalogOutputCountVoltageLabel"
+        Me.AnalogOutputCountVoltageLabel.Size = New System.Drawing.Size(141, 16)
+        Me.AnalogOutputCountVoltageLabel.TabIndex = 23
+        Me.AnalogOutputCountVoltageLabel.Text = "Analog Output Voltage"
         '
         'VBTERMINALFORM
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1166, 594)
+        Me.ClientSize = New System.Drawing.Size(878, 594)
         Me.Controls.Add(Me.TabControl1)
         Me.Name = "VBTERMINALFORM"
         Me.Text = "VB Terminal Form"
@@ -518,6 +543,9 @@ Partial Class VBTERMINALFORM
         Me.SettingsTab.ResumeLayout(False)
         Me.SettingsTab.PerformLayout()
         Me.QYTab.ResumeLayout(False)
+        Me.QYTab.PerformLayout()
+        CType(Me.AnalogOutputBar, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.DigitalOutputsGroupBox.ResumeLayout(False)
         Me.ReadDigitalInputsGroupBox.ResumeLayout(False)
         Me.ResumeLayout(False)
 
@@ -539,8 +567,6 @@ Partial Class VBTERMINALFORM
     Friend WithEvents InTerm As ListBox
     Friend WithEvents OutputClearButton As Button
     Friend WithEvents InputClearButton As Button
-    Friend WithEvents DecimalRadioButton As RadioButton
-    Friend WithEvents ASCIIRadioButton As RadioButton
     Friend WithEvents TabControl1 As TabControl
     Friend WithEvents SettingsTab As TabPage
     Friend WithEvents QYTab As TabPage
@@ -552,15 +578,20 @@ Partial Class VBTERMINALFORM
     Friend WithEvents ReadDigitalCheckbox3 As CheckBox
     Friend WithEvents ReadDigitalCheckbox2 As CheckBox
     Friend WithEvents ReadDigitalCheckbox1 As CheckBox
-    Friend WithEvents CheckBox8 As CheckBox
     Friend WithEvents WriteDigitalOutputsButton As Button
-    Friend WithEvents CheckBox9 As CheckBox
-    Friend WithEvents CheckBox10 As CheckBox
-    Friend WithEvents CheckBox11 As CheckBox
-    Friend WithEvents CheckBox12 As CheckBox
-    Friend WithEvents CheckBox13 As CheckBox
-    Friend WithEvents CheckBox14 As CheckBox
-    Friend WithEvents CheckBox15 As CheckBox
     Friend WithEvents ReadDigitalInputsGroupBox As GroupBox
     Friend WithEvents ReadDigitalCheckbox7 As CheckBox
+    Friend WithEvents DigitalOutputsGroupBox As GroupBox
+    Friend WithEvents DigitalWriteCheckBox0 As CheckBox
+    Friend WithEvents DigitalWriteCheckBox1 As CheckBox
+    Friend WithEvents DigitalWriteCheckBox2 As CheckBox
+    Friend WithEvents DigitalWriteCheckBox3 As CheckBox
+    Friend WithEvents DigitalWriteCheckBox4 As CheckBox
+    Friend WithEvents DigitalWriteCheckBox5 As CheckBox
+    Friend WithEvents DigitalWriteCheckBox6 As CheckBox
+    Friend WithEvents DigitalWriteCheckBox7 As CheckBox
+    Friend WithEvents AnalogOutputCountLabel As Label
+    Friend WithEvents AnalogOutputBarLabel As Label
+    Friend WithEvents AnalogOutputBar As TrackBar
+    Friend WithEvents AnalogOutputCountVoltageLabel As Label
 End Class

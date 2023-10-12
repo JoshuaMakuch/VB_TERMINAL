@@ -6,6 +6,8 @@
 
 Imports System.IO
 Imports System.IO.Ports
+Imports System.Runtime.Remoting.Messaging
+Imports System.Text
 Imports System.Threading
 Imports System.Windows.Forms.VisualStyles.VisualStyleElement
 Imports System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar
@@ -18,7 +20,6 @@ Public Class VBTERMINALFORM
     Dim ReceiveCount As Integer
     Dim NewData As Integer
     Dim DataIn1, DataIn2, DataIn3, DataIn4, DataIn5, DataIn6, DataIn7, DataIn8 As Integer
-    Dim DisplayCount
 
     'On Form unload, close the port as to not have it stuck open and inaccessible
     Private Sub VBTERMINALFORM_UnLoad(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -125,7 +126,7 @@ Public Class VBTERMINALFORM
                     NewData -= 1
             End Select
 
-
+            NewItemForInTermListBox()
             InTerm.Items.Add(Hex(Input1) & Hex(Input2) & Hex(Input3) & Hex(Input4) & Hex(Input5) & Hex(Input6) & Hex(Input7) & Hex(Input8))
 
         End If
@@ -155,6 +156,47 @@ Public Class VBTERMINALFORM
         SendPacketButton_Click(sender, e)
     End Sub
 
+    'Handles the write digital inputs button
+    Private Sub WriteDigitalOutputsButton_Click(sender As Object, e As EventArgs) Handles WriteDigitalOutputsButton.Click
+        Dim FinalDec As Integer 'This holds onto all weighted button data
+
+        If DigitalWriteCheckBox0.Checked Then
+            FinalDec = FinalDec + 128
+        End If
+        If DigitalWriteCheckBox1.Checked Then
+            FinalDec = FinalDec + 64
+        End If
+        If DigitalWriteCheckBox2.Checked Then
+            FinalDec = FinalDec + 32
+        End If
+        If DigitalWriteCheckBox3.Checked Then
+            FinalDec = FinalDec + 16
+        End If
+        If DigitalWriteCheckBox4.Checked Then
+            FinalDec = FinalDec + 8
+        End If
+        If DigitalWriteCheckBox5.Checked Then
+            FinalDec = FinalDec + 4
+        End If
+        If DigitalWriteCheckBox6.Checked Then
+            FinalDec = FinalDec + 2
+        End If
+        If DigitalWriteCheckBox7.Checked Then
+            FinalDec = FinalDec + 1
+        End If
+
+        Timer1.Enabled = False 'stop timer
+        Dim MyMessage() As Byte = {&H20, CInt(FinalDec)}
+
+        If PortState = True Then 'Test if port is open
+            SerialPort1.Write(MyMessage, 0, MyMessage.Length)
+            OutTerm.Items.Add(MyMessage)
+        Else
+            MsgBox("Please configure and open serial port to procede") 'Failure if port is not open
+        End If
+        Timer1.Enabled = True 'restart timer
+    End Sub
+
     'Handles when the select baud rate button is pressed
     Private Sub SelectBaud_Click(sender As Object, e As EventArgs) Handles SelectBaud.Click
         PortSelect.Items.Clear() 'Clear list Box and load Baud Rate values
@@ -169,6 +211,12 @@ Public Class VBTERMINALFORM
         PortSelect.Items.Add(230400)
         PortSelect.Items.Add(460800)
         PortSelect.Items.Add(921600)
+    End Sub
+
+    'Handles when the analog output bar scrolls
+    Private Sub AnalogOutputBar_Scroll(sender As Object, e As EventArgs) Handles AnalogOutputBar.Scroll
+        AnalogOutputCountLabel.Text = AnalogOutputBar.Value
+        AnalogOutputCountVoltageLabel.Text = CStr(AnalogOutputBar.Value * ((3.3) / (2 ^ 10 - 1)))) & " V"
     End Sub
 
     'Handles the quit button
@@ -190,16 +238,14 @@ Public Class VBTERMINALFORM
 
         If PortState = True Then 'Test if port is open
             If DataOut IsNot "" Then 'Test transmit data is not blank
-                SerialPort1.DiscardInBuffer() 'Clear input buffer before sending data
-                SerialPort1.Write(DataOut) 'Send data
-                OutTerm.Items.Add(DataOut) 'Log sent data
+                SerialPort1.Write(DataOut)
+                OutTerm.Items.Add(DataOut)
             Else 'Send Data was blank
                 Timer1.Enabled = True 'restart timer
                 Exit Sub 'Leave
             End If
         Else
             MsgBox("Please configure and open serial port to procede") 'Failure if port is not open
-
         End If
         Timer1.Enabled = True 'restart timer 
 
@@ -250,6 +296,10 @@ Public Class VBTERMINALFORM
 
         NewData += 1
 
+    End Sub
+
+    Sub NewItemForInTermListBox()
+        AnalogOutputCountLabel.Text = "received"
     End Sub
 
 End Class
