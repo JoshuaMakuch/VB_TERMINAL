@@ -42,9 +42,13 @@ Partial Class VBTERMINALFORM
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.SettingsTab = New System.Windows.Forms.TabPage()
         Me.QYTab = New System.Windows.Forms.TabPage()
-        Me.AnalogOutputCountLabel = New System.Windows.Forms.Label()
-        Me.AnalogOutputBarLabel = New System.Windows.Forms.Label()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.AnalogOutputGroupBox = New System.Windows.Forms.GroupBox()
         Me.AnalogOutputBar = New System.Windows.Forms.TrackBar()
+        Me.AnalogOutputBarLabel = New System.Windows.Forms.Label()
+        Me.AnalogOutputCountVoltageLabel = New System.Windows.Forms.Label()
+        Me.AnalogOutputCountLabel = New System.Windows.Forms.Label()
+        Me.QuitButton2 = New System.Windows.Forms.Button()
         Me.DigitalOutputsGroupBox = New System.Windows.Forms.GroupBox()
         Me.DigitalWriteCheckBox0 = New System.Windows.Forms.CheckBox()
         Me.DigitalWriteCheckBox1 = New System.Windows.Forms.CheckBox()
@@ -63,12 +67,10 @@ Partial Class VBTERMINALFORM
         Me.ReadDigitalCheckbox5 = New System.Windows.Forms.CheckBox()
         Me.ReadDigitalCheckbox6 = New System.Windows.Forms.CheckBox()
         Me.ReadDigitalCheckbox7 = New System.Windows.Forms.CheckBox()
-        Me.WriteDigitalOutputsButton = New System.Windows.Forms.Button()
-        Me.ReadDigitalInputsButton = New System.Windows.Forms.Button()
-        Me.AnalogOutputCountVoltageLabel = New System.Windows.Forms.Label()
         Me.TabControl1.SuspendLayout()
         Me.SettingsTab.SuspendLayout()
         Me.QYTab.SuspendLayout()
+        Me.AnalogOutputGroupBox.SuspendLayout()
         CType(Me.AnalogOutputBar, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.DigitalOutputsGroupBox.SuspendLayout()
         Me.ReadDigitalInputsGroupBox.SuspendLayout()
@@ -79,6 +81,7 @@ Partial Class VBTERMINALFORM
         '
         'Timer1
         '
+        Me.Timer1.Interval = 1
         '
         'PortSelect
         '
@@ -240,14 +243,11 @@ Partial Class VBTERMINALFORM
         '
         'QYTab
         '
-        Me.QYTab.Controls.Add(Me.AnalogOutputCountVoltageLabel)
-        Me.QYTab.Controls.Add(Me.AnalogOutputCountLabel)
-        Me.QYTab.Controls.Add(Me.AnalogOutputBarLabel)
-        Me.QYTab.Controls.Add(Me.AnalogOutputBar)
+        Me.QYTab.Controls.Add(Me.Label1)
+        Me.QYTab.Controls.Add(Me.AnalogOutputGroupBox)
+        Me.QYTab.Controls.Add(Me.QuitButton2)
         Me.QYTab.Controls.Add(Me.DigitalOutputsGroupBox)
         Me.QYTab.Controls.Add(Me.ReadDigitalInputsGroupBox)
-        Me.QYTab.Controls.Add(Me.WriteDigitalOutputsButton)
-        Me.QYTab.Controls.Add(Me.ReadDigitalInputsButton)
         Me.QYTab.Location = New System.Drawing.Point(4, 25)
         Me.QYTab.Name = "QYTab"
         Me.QYTab.Padding = New System.Windows.Forms.Padding(3)
@@ -256,31 +256,71 @@ Partial Class VBTERMINALFORM
         Me.QYTab.Text = "QY@ Board Control"
         Me.QYTab.UseVisualStyleBackColor = True
         '
-        'AnalogOutputCountLabel
+        'Label1
         '
-        Me.AnalogOutputCountLabel.AutoSize = True
-        Me.AnalogOutputCountLabel.Location = New System.Drawing.Point(362, 271)
-        Me.AnalogOutputCountLabel.Name = "AnalogOutputCountLabel"
-        Me.AnalogOutputCountLabel.Size = New System.Drawing.Size(129, 16)
-        Me.AnalogOutputCountLabel.TabIndex = 22
-        Me.AnalogOutputCountLabel.Text = "Analog Output Value"
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(420, 110)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(48, 16)
+        Me.Label1.TabIndex = 26
+        Me.Label1.Text = "Label1"
+        '
+        'AnalogOutputGroupBox
+        '
+        Me.AnalogOutputGroupBox.Controls.Add(Me.AnalogOutputBar)
+        Me.AnalogOutputGroupBox.Controls.Add(Me.AnalogOutputBarLabel)
+        Me.AnalogOutputGroupBox.Controls.Add(Me.AnalogOutputCountVoltageLabel)
+        Me.AnalogOutputGroupBox.Controls.Add(Me.AnalogOutputCountLabel)
+        Me.AnalogOutputGroupBox.Location = New System.Drawing.Point(6, 132)
+        Me.AnalogOutputGroupBox.Name = "AnalogOutputGroupBox"
+        Me.AnalogOutputGroupBox.Size = New System.Drawing.Size(368, 141)
+        Me.AnalogOutputGroupBox.TabIndex = 25
+        Me.AnalogOutputGroupBox.TabStop = False
+        Me.AnalogOutputGroupBox.Text = "Analog Output"
+        '
+        'AnalogOutputBar
+        '
+        Me.AnalogOutputBar.Location = New System.Drawing.Point(6, 38)
+        Me.AnalogOutputBar.Maximum = 1023
+        Me.AnalogOutputBar.Name = "AnalogOutputBar"
+        Me.AnalogOutputBar.Size = New System.Drawing.Size(346, 56)
+        Me.AnalogOutputBar.TabIndex = 20
         '
         'AnalogOutputBarLabel
         '
         Me.AnalogOutputBarLabel.AutoSize = True
-        Me.AnalogOutputBarLabel.Location = New System.Drawing.Point(362, 193)
+        Me.AnalogOutputBarLabel.Location = New System.Drawing.Point(3, 19)
         Me.AnalogOutputBarLabel.Name = "AnalogOutputBarLabel"
         Me.AnalogOutputBarLabel.Size = New System.Drawing.Size(91, 16)
         Me.AnalogOutputBarLabel.TabIndex = 21
         Me.AnalogOutputBarLabel.Text = "Analog Output"
         '
-        'AnalogOutputBar
+        'AnalogOutputCountVoltageLabel
         '
-        Me.AnalogOutputBar.Location = New System.Drawing.Point(365, 212)
-        Me.AnalogOutputBar.Maximum = 1023
-        Me.AnalogOutputBar.Name = "AnalogOutputBar"
-        Me.AnalogOutputBar.Size = New System.Drawing.Size(346, 56)
-        Me.AnalogOutputBar.TabIndex = 20
+        Me.AnalogOutputCountVoltageLabel.AutoSize = True
+        Me.AnalogOutputCountVoltageLabel.Location = New System.Drawing.Point(3, 113)
+        Me.AnalogOutputCountVoltageLabel.Name = "AnalogOutputCountVoltageLabel"
+        Me.AnalogOutputCountVoltageLabel.Size = New System.Drawing.Size(141, 16)
+        Me.AnalogOutputCountVoltageLabel.TabIndex = 23
+        Me.AnalogOutputCountVoltageLabel.Text = "Analog Output Voltage"
+        '
+        'AnalogOutputCountLabel
+        '
+        Me.AnalogOutputCountLabel.AutoSize = True
+        Me.AnalogOutputCountLabel.Location = New System.Drawing.Point(3, 97)
+        Me.AnalogOutputCountLabel.Name = "AnalogOutputCountLabel"
+        Me.AnalogOutputCountLabel.Size = New System.Drawing.Size(129, 16)
+        Me.AnalogOutputCountLabel.TabIndex = 22
+        Me.AnalogOutputCountLabel.Text = "Analog Output Value"
+        '
+        'QuitButton2
+        '
+        Me.QuitButton2.Location = New System.Drawing.Point(750, 497)
+        Me.QuitButton2.Name = "QuitButton2"
+        Me.QuitButton2.Size = New System.Drawing.Size(101, 45)
+        Me.QuitButton2.TabIndex = 24
+        Me.QuitButton2.Text = "Quit"
+        Me.QuitButton2.UseVisualStyleBackColor = True
         '
         'DigitalOutputsGroupBox
         '
@@ -292,7 +332,7 @@ Partial Class VBTERMINALFORM
         Me.DigitalOutputsGroupBox.Controls.Add(Me.DigitalWriteCheckBox5)
         Me.DigitalOutputsGroupBox.Controls.Add(Me.DigitalWriteCheckBox6)
         Me.DigitalOutputsGroupBox.Controls.Add(Me.DigitalWriteCheckBox7)
-        Me.DigitalOutputsGroupBox.Location = New System.Drawing.Point(266, 6)
+        Me.DigitalOutputsGroupBox.Location = New System.Drawing.Point(6, 69)
         Me.DigitalOutputsGroupBox.Name = "DigitalOutputsGroupBox"
         Me.DigitalOutputsGroupBox.Size = New System.Drawing.Size(254, 57)
         Me.DigitalOutputsGroupBox.TabIndex = 19
@@ -504,38 +544,11 @@ Partial Class VBTERMINALFORM
         Me.ReadDigitalCheckbox7.Text = "L"
         Me.ReadDigitalCheckbox7.UseVisualStyleBackColor = True
         '
-        'WriteDigitalOutputsButton
-        '
-        Me.WriteDigitalOutputsButton.Location = New System.Drawing.Point(265, 69)
-        Me.WriteDigitalOutputsButton.Name = "WriteDigitalOutputsButton"
-        Me.WriteDigitalOutputsButton.Size = New System.Drawing.Size(137, 69)
-        Me.WriteDigitalOutputsButton.TabIndex = 10
-        Me.WriteDigitalOutputsButton.Text = "Write Digital Outputs"
-        Me.WriteDigitalOutputsButton.UseVisualStyleBackColor = True
-        '
-        'ReadDigitalInputsButton
-        '
-        Me.ReadDigitalInputsButton.Location = New System.Drawing.Point(6, 69)
-        Me.ReadDigitalInputsButton.Name = "ReadDigitalInputsButton"
-        Me.ReadDigitalInputsButton.Size = New System.Drawing.Size(137, 69)
-        Me.ReadDigitalInputsButton.TabIndex = 1
-        Me.ReadDigitalInputsButton.Text = "Read Digital Inputs"
-        Me.ReadDigitalInputsButton.UseVisualStyleBackColor = True
-        '
-        'AnalogOutputCountVoltageLabel
-        '
-        Me.AnalogOutputCountVoltageLabel.AutoSize = True
-        Me.AnalogOutputCountVoltageLabel.Location = New System.Drawing.Point(362, 287)
-        Me.AnalogOutputCountVoltageLabel.Name = "AnalogOutputCountVoltageLabel"
-        Me.AnalogOutputCountVoltageLabel.Size = New System.Drawing.Size(141, 16)
-        Me.AnalogOutputCountVoltageLabel.TabIndex = 23
-        Me.AnalogOutputCountVoltageLabel.Text = "Analog Output Voltage"
-        '
         'VBTERMINALFORM
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(878, 594)
+        Me.ClientSize = New System.Drawing.Size(875, 590)
         Me.Controls.Add(Me.TabControl1)
         Me.Name = "VBTERMINALFORM"
         Me.Text = "VB Terminal Form"
@@ -544,6 +557,8 @@ Partial Class VBTERMINALFORM
         Me.SettingsTab.PerformLayout()
         Me.QYTab.ResumeLayout(False)
         Me.QYTab.PerformLayout()
+        Me.AnalogOutputGroupBox.ResumeLayout(False)
+        Me.AnalogOutputGroupBox.PerformLayout()
         CType(Me.AnalogOutputBar, System.ComponentModel.ISupportInitialize).EndInit()
         Me.DigitalOutputsGroupBox.ResumeLayout(False)
         Me.ReadDigitalInputsGroupBox.ResumeLayout(False)
@@ -570,7 +585,6 @@ Partial Class VBTERMINALFORM
     Friend WithEvents TabControl1 As TabControl
     Friend WithEvents SettingsTab As TabPage
     Friend WithEvents QYTab As TabPage
-    Friend WithEvents ReadDigitalInputsButton As Button
     Friend WithEvents ReadDigitalCheckbox0 As CheckBox
     Friend WithEvents ReadDigitalCheckbox6 As CheckBox
     Friend WithEvents ReadDigitalCheckbox5 As CheckBox
@@ -578,7 +592,6 @@ Partial Class VBTERMINALFORM
     Friend WithEvents ReadDigitalCheckbox3 As CheckBox
     Friend WithEvents ReadDigitalCheckbox2 As CheckBox
     Friend WithEvents ReadDigitalCheckbox1 As CheckBox
-    Friend WithEvents WriteDigitalOutputsButton As Button
     Friend WithEvents ReadDigitalInputsGroupBox As GroupBox
     Friend WithEvents ReadDigitalCheckbox7 As CheckBox
     Friend WithEvents DigitalOutputsGroupBox As GroupBox
@@ -594,4 +607,7 @@ Partial Class VBTERMINALFORM
     Friend WithEvents AnalogOutputBarLabel As Label
     Friend WithEvents AnalogOutputBar As TrackBar
     Friend WithEvents AnalogOutputCountVoltageLabel As Label
+    Friend WithEvents QuitButton2 As Button
+    Friend WithEvents AnalogOutputGroupBox As GroupBox
+    Friend WithEvents Label1 As Label
 End Class

@@ -6,6 +6,7 @@
 
 Imports System.IO
 Imports System.IO.Ports
+Imports System.Runtime.InteropServices
 Imports System.Runtime.Remoting.Messaging
 Imports System.Text
 Imports System.Threading
@@ -72,10 +73,9 @@ Public Class VBTERMINALFORM
         End If
     End Sub
 
-    'Every 100mS it will update the PortData List box
+    'Every 1mS it will update the PortData List box
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         Dim DataIn As String
-        Dim Input1, Input2, Input3, Input4, Input5, Input6, Input7, Input8 As Integer
         DataIn = ""
         PortData.Items.Clear()
         PortData.Items.Add("Com Port = " & SerialPort1.PortName) 'show current baud rate
@@ -83,6 +83,20 @@ Public Class VBTERMINALFORM
         PortData.Items.Add("Data Bits = " & SerialPort1.DataBits)
         PortData.Items.Add("Stop Bits = " & SerialPort1.StopBits)
         PortData.Items.Add("Parity = " & SerialPort1.Parity)
+
+        If TabControl1.SelectedIndex = 0 Then 'This is the settings tab
+            CheckForReceived()
+        ElseIf TabControl1.SelectedIndex = 1 Then 'This is the QY@ board tab
+            QYBoardTabHandle()
+        End If
+
+    End Sub
+
+    'This is used to recieve new data only when desired
+    Private Function CheckForReceived()
+
+        Dim DataIn As String = ""
+        Dim Input1, Input2, Input3, Input4, Input5, Input6, Input7, Input8 As Integer
 
         If NewData > 0 Then 'Test NewData if >0 there is information to display  Select Case NewData
             Select Case NewData
@@ -124,14 +138,46 @@ Public Class VBTERMINALFORM
                 Case = 1
                     Input1 = DataIn1
                     NewData -= 1
+                    InTerm.Items.Add(Hex(Input1) & Hex(Input2) & Hex(Input3) & Hex(Input4) & Hex(Input5) & Hex(Input6) & Hex(Input7) & Hex(Input8))
             End Select
 
-            NewItemForInTermListBox()
-            InTerm.Items.Add(Hex(Input1) & Hex(Input2) & Hex(Input3) & Hex(Input4) & Hex(Input5) & Hex(Input6) & Hex(Input7) & Hex(Input8))
+            DataIn = Hex(Input1) & Hex(Input2) & Hex(Input3) & Hex(Input4) & Hex(Input5) & Hex(Input6) & Hex(Input7) & Hex(Input8)
+
 
         End If
 
+        Return (DataIn)
 
+    End Function
+
+    'This is used to send data from 
+    Private Sub WritePacketToOutput(MyMessage() As Byte)
+        Dim OutTermString As String
+        Timer1.Enabled = False 'stop timer
+        If PortState = True Then 'Test if port is open
+            Try
+                SerialPort1.Write(MyMessage, 0, MyMessage.Length)
+                For i As Integer = 0 To MyMessage.Length - 1
+                    OutTermString = Hex(MyMessage(i)) & "." & OutTermString
+                Next
+                OutTerm.Items.Add(OutTermString)
+            Catch ex As Exception
+                SerialPort1.Close()
+                PortOpen.Text = "Connect"
+                PortState = False
+                TabControl1.SelectedIndex = 0
+                ScanButton.Select()
+                MsgBox("Please configure and open serial port to procede") 'Failure if port is not open
+            End Try
+        Else
+            SerialPort1.Close()
+            PortOpen.Text = "Connect"
+            PortState = False
+            TabControl1.SelectedIndex = 0
+            ScanButton.Select()
+            MsgBox("Please configure and open serial port to procede") 'Failure if port is not open
+        End If
+        Timer1.Enabled = True 'restart timer
     End Sub
 
     'This is what will set the port when the user clicks on something in the Port Select
@@ -144,57 +190,15 @@ Public Class VBTERMINALFORM
         PortOpen.Text = "Connect"
         PortState = False
         Try
+            If PortSelect.SelectedIndex = vbNull Then
+
+            ElseIf PortSelect.SelectedItem.ToString.Contains("COM") Then
+                SerialPort1.PortName = PortSelect.SelectedItem
+            End If
             SerialPort1.BaudRate = PortSelect.SelectedItem 'see if Baud Rate data Is in the list box
         Catch ex As Exception
-            SerialPort1.PortName = PortSelect.SelectedItem ' bot Baud Rate, save port Name
+
         End Try
-    End Sub
-
-    'Handles the read digital inputs button
-    Private Sub ReadDigitalInputsButton_Click(sender As Object, e As EventArgs) Handles ReadDigitalInputsButton.Click
-        DataTextBox.Text = Chr(48) 'Sets the data text box to a h20 (space) to send to the QY@ board, this is a read digital inputs command.
-        SendPacketButton_Click(sender, e)
-    End Sub
-
-    'Handles the write digital inputs button
-    Private Sub WriteDigitalOutputsButton_Click(sender As Object, e As EventArgs) Handles WriteDigitalOutputsButton.Click
-        Dim FinalDec As Integer 'This holds onto all weighted button data
-
-        If DigitalWriteCheckBox0.Checked Then
-            FinalDec = FinalDec + 128
-        End If
-        If DigitalWriteCheckBox1.Checked Then
-            FinalDec = FinalDec + 64
-        End If
-        If DigitalWriteCheckBox2.Checked Then
-            FinalDec = FinalDec + 32
-        End If
-        If DigitalWriteCheckBox3.Checked Then
-            FinalDec = FinalDec + 16
-        End If
-        If DigitalWriteCheckBox4.Checked Then
-            FinalDec = FinalDec + 8
-        End If
-        If DigitalWriteCheckBox5.Checked Then
-            FinalDec = FinalDec + 4
-        End If
-        If DigitalWriteCheckBox6.Checked Then
-            FinalDec = FinalDec + 2
-        End If
-        If DigitalWriteCheckBox7.Checked Then
-            FinalDec = FinalDec + 1
-        End If
-
-        Timer1.Enabled = False 'stop timer
-        Dim MyMessage() As Byte = {&H20, CInt(FinalDec)}
-
-        If PortState = True Then 'Test if port is open
-            SerialPort1.Write(MyMessage, 0, MyMessage.Length)
-            OutTerm.Items.Add(MyMessage)
-        Else
-            MsgBox("Please configure and open serial port to procede") 'Failure if port is not open
-        End If
-        Timer1.Enabled = True 'restart timer
     End Sub
 
     'Handles when the select baud rate button is pressed
@@ -213,14 +217,8 @@ Public Class VBTERMINALFORM
         PortSelect.Items.Add(921600)
     End Sub
 
-    'Handles when the analog output bar scrolls
-    Private Sub AnalogOutputBar_Scroll(sender As Object, e As EventArgs) Handles AnalogOutputBar.Scroll
-        AnalogOutputCountLabel.Text = AnalogOutputBar.Value
-        AnalogOutputCountVoltageLabel.Text = CStr(AnalogOutputBar.Value * ((3.3) / (2 ^ 10 - 1)))) & " V"
-    End Sub
-
     'Handles the quit button
-    Private Sub QuitButton_Click(sender As Object, e As EventArgs) Handles QuitButton.Click
+    Private Sub QuitButton_Click(sender As Object, e As EventArgs) Handles QuitButton.Click, QuitButton2.Click
         Try
             SerialPort1.Close()
             Close()
@@ -231,6 +229,7 @@ Public Class VBTERMINALFORM
 
     'Handles send packet button
     Private Sub SendPacketButton_Click(sender As Object, e As EventArgs) Handles SendPacketButton.Click
+
         Timer1.Enabled = False 'stop timer
         Dim DataOut As String 'Transmit Variable
 
@@ -270,7 +269,7 @@ Public Class VBTERMINALFORM
     'Whenever the com port says we have information
     Private Sub SerialPort1_DataReceived(sender As Object, e As SerialDataReceivedEventArgs) Handles SerialPort1.DataReceived
 
-        SerialPort1.Read(receiveByte, 0, 4)
+        SerialPort1.Read(receiveByte, 0, 8)
 
         Select Case NewData
             Case = 0
@@ -298,8 +297,62 @@ Public Class VBTERMINALFORM
 
     End Sub
 
-    Sub NewItemForInTermListBox()
-        AnalogOutputCountLabel.Text = "received"
+
+
+    '*** QY@ BOARD TAB *****************************************************************************************************************************************************************************************
+
+    Sub QYBoardTabHandle()
+        If PortState = True Then
+            '*** Read Digital Inputs ******************************************************************************************************************************************************************
+
+            WritePacketToOutput({&H30}) 'Writes a digital input read
+            'Now check for incoming data from the QY@ board
+            Try
+                Dim DigInValString As String = CheckForReceived()
+                Dim DigInVal As Integer = Convert.ToInt32(DigInValString.Chars(0) & DigInValString.Chars(1), 16)
+                If DigInVal >= 128 Then ReadDigitalCheckbox0.Checked = True : DigInVal -= 128 Else ReadDigitalCheckbox0.Checked = False
+                If DigInVal >= 63 Then ReadDigitalCheckbox1.Checked = True : DigInVal -= 64 Else ReadDigitalCheckbox1.Checked = False
+                If DigInVal >= 32 Then ReadDigitalCheckbox2.Checked = True : DigInVal -= 32 Else ReadDigitalCheckbox2.Checked = False
+                If DigInVal >= 16 Then ReadDigitalCheckbox3.Checked = True : DigInVal -= 16 Else ReadDigitalCheckbox3.Checked = False
+                If DigInVal >= 8 Then ReadDigitalCheckbox4.Checked = True : DigInVal -= 8 Else ReadDigitalCheckbox4.Checked = False
+                If DigInVal >= 4 Then ReadDigitalCheckbox5.Checked = True : DigInVal -= 4 Else ReadDigitalCheckbox5.Checked = False
+                If DigInVal >= 2 Then ReadDigitalCheckbox6.Checked = True : DigInVal -= 2 Else ReadDigitalCheckbox6.Checked = False
+                If DigInVal >= 1 Then ReadDigitalCheckbox7.Checked = True : DigInVal -= 1 Else ReadDigitalCheckbox7.Checked = False
+            Catch ex As Exception
+
+            End Try
+
+            '*** Write Digital Outputs ****************************************************************************************************************************************************************
+
+            Dim FinalDec As Integer 'This holds onto all weighted button data
+
+            If DigitalWriteCheckBox0.Checked Then FinalDec = FinalDec + 128
+            If DigitalWriteCheckBox1.Checked Then FinalDec = FinalDec + 64
+            If DigitalWriteCheckBox2.Checked Then FinalDec = FinalDec + 32
+            If DigitalWriteCheckBox3.Checked Then FinalDec = FinalDec + 16
+            If DigitalWriteCheckBox4.Checked Then FinalDec = FinalDec + 8
+            If DigitalWriteCheckBox5.Checked Then FinalDec = FinalDec + 4
+            If DigitalWriteCheckBox6.Checked Then FinalDec = FinalDec + 2
+            If DigitalWriteCheckBox7.Checked Then FinalDec = FinalDec + 1
+
+            WritePacketToOutput({&H20, FinalDec})
+
+            '*** Read Analog Inputs *******************************************************************************************************************************************************************
+
+            WritePacketToOutput({&H51}) 'Writes an analog input read
+            Try
+                Dim AnaInValString As String = CheckForReceived()
+                Label1.Text = AnaInValString
+            Catch ex As Exception
+
+            End Try
+
+            '*** Write Analog Outputs *****************************************************************************************************************************************************************
+        Else
+            TabControl1.SelectedIndex = 0
+            ScanButton.Select()
+            MsgBox("Please configure and open serial port to procede") 'Failure if port is not open
+        End If
     End Sub
 
 End Class
