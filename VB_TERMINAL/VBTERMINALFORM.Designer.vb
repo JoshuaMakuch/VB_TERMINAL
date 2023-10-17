@@ -42,11 +42,15 @@ Partial Class VBTERMINALFORM
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.SettingsTab = New System.Windows.Forms.TabPage()
         Me.QYTab = New System.Windows.Forms.TabPage()
-        Me.Label1 = New System.Windows.Forms.Label()
+        Me.AnalogInputGroupBox = New System.Windows.Forms.GroupBox()
+        Me.AnalogInputVoltageLabel = New System.Windows.Forms.Label()
+        Me.AnalogInputProgressBar = New System.Windows.Forms.ProgressBar()
+        Me.AnalogInputValueLabel = New System.Windows.Forms.Label()
+        Me.AnalogInputBarLabel = New System.Windows.Forms.Label()
         Me.AnalogOutputGroupBox = New System.Windows.Forms.GroupBox()
         Me.AnalogOutputBar = New System.Windows.Forms.TrackBar()
         Me.AnalogOutputBarLabel = New System.Windows.Forms.Label()
-        Me.AnalogOutputCountVoltageLabel = New System.Windows.Forms.Label()
+        Me.AnalogOutputVoltageLabel = New System.Windows.Forms.Label()
         Me.AnalogOutputCountLabel = New System.Windows.Forms.Label()
         Me.QuitButton2 = New System.Windows.Forms.Button()
         Me.DigitalOutputsGroupBox = New System.Windows.Forms.GroupBox()
@@ -70,6 +74,7 @@ Partial Class VBTERMINALFORM
         Me.TabControl1.SuspendLayout()
         Me.SettingsTab.SuspendLayout()
         Me.QYTab.SuspendLayout()
+        Me.AnalogInputGroupBox.SuspendLayout()
         Me.AnalogOutputGroupBox.SuspendLayout()
         CType(Me.AnalogOutputBar, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.DigitalOutputsGroupBox.SuspendLayout()
@@ -243,7 +248,7 @@ Partial Class VBTERMINALFORM
         '
         'QYTab
         '
-        Me.QYTab.Controls.Add(Me.Label1)
+        Me.QYTab.Controls.Add(Me.AnalogInputGroupBox)
         Me.QYTab.Controls.Add(Me.AnalogOutputGroupBox)
         Me.QYTab.Controls.Add(Me.QuitButton2)
         Me.QYTab.Controls.Add(Me.DigitalOutputsGroupBox)
@@ -256,27 +261,66 @@ Partial Class VBTERMINALFORM
         Me.QYTab.Text = "QY@ Board Control"
         Me.QYTab.UseVisualStyleBackColor = True
         '
-        'Label1
+        'AnalogInputGroupBox
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(420, 110)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(48, 16)
-        Me.Label1.TabIndex = 26
-        Me.Label1.Text = "Label1"
+        Me.AnalogInputGroupBox.Controls.Add(Me.AnalogInputVoltageLabel)
+        Me.AnalogInputGroupBox.Controls.Add(Me.AnalogInputProgressBar)
+        Me.AnalogInputGroupBox.Controls.Add(Me.AnalogInputValueLabel)
+        Me.AnalogInputGroupBox.Controls.Add(Me.AnalogInputBarLabel)
+        Me.AnalogInputGroupBox.Location = New System.Drawing.Point(6, 279)
+        Me.AnalogInputGroupBox.Name = "AnalogInputGroupBox"
+        Me.AnalogInputGroupBox.Size = New System.Drawing.Size(368, 124)
+        Me.AnalogInputGroupBox.TabIndex = 28
+        Me.AnalogInputGroupBox.TabStop = False
+        Me.AnalogInputGroupBox.Text = "Analog Inputs"
+        '
+        'AnalogInputVoltageLabel
+        '
+        Me.AnalogInputVoltageLabel.AutoSize = True
+        Me.AnalogInputVoltageLabel.Location = New System.Drawing.Point(6, 85)
+        Me.AnalogInputVoltageLabel.Name = "AnalogInputVoltageLabel"
+        Me.AnalogInputVoltageLabel.Size = New System.Drawing.Size(131, 16)
+        Me.AnalogInputVoltageLabel.TabIndex = 29
+        Me.AnalogInputVoltageLabel.Text = "Analog Input Voltage"
+        '
+        'AnalogInputProgressBar
+        '
+        Me.AnalogInputProgressBar.Location = New System.Drawing.Point(6, 42)
+        Me.AnalogInputProgressBar.Maximum = 1023
+        Me.AnalogInputProgressBar.Name = "AnalogInputProgressBar"
+        Me.AnalogInputProgressBar.Size = New System.Drawing.Size(346, 23)
+        Me.AnalogInputProgressBar.TabIndex = 27
+        '
+        'AnalogInputValueLabel
+        '
+        Me.AnalogInputValueLabel.AutoSize = True
+        Me.AnalogInputValueLabel.Location = New System.Drawing.Point(4, 68)
+        Me.AnalogInputValueLabel.Name = "AnalogInputValueLabel"
+        Me.AnalogInputValueLabel.Size = New System.Drawing.Size(119, 16)
+        Me.AnalogInputValueLabel.TabIndex = 28
+        Me.AnalogInputValueLabel.Text = "Analog Input Value"
+        '
+        'AnalogInputBarLabel
+        '
+        Me.AnalogInputBarLabel.AutoSize = True
+        Me.AnalogInputBarLabel.Location = New System.Drawing.Point(4, 23)
+        Me.AnalogInputBarLabel.Name = "AnalogInputBarLabel"
+        Me.AnalogInputBarLabel.Size = New System.Drawing.Size(91, 16)
+        Me.AnalogInputBarLabel.TabIndex = 26
+        Me.AnalogInputBarLabel.Text = "Analog Input 1"
         '
         'AnalogOutputGroupBox
         '
         Me.AnalogOutputGroupBox.Controls.Add(Me.AnalogOutputBar)
         Me.AnalogOutputGroupBox.Controls.Add(Me.AnalogOutputBarLabel)
-        Me.AnalogOutputGroupBox.Controls.Add(Me.AnalogOutputCountVoltageLabel)
+        Me.AnalogOutputGroupBox.Controls.Add(Me.AnalogOutputVoltageLabel)
         Me.AnalogOutputGroupBox.Controls.Add(Me.AnalogOutputCountLabel)
         Me.AnalogOutputGroupBox.Location = New System.Drawing.Point(6, 132)
         Me.AnalogOutputGroupBox.Name = "AnalogOutputGroupBox"
         Me.AnalogOutputGroupBox.Size = New System.Drawing.Size(368, 141)
         Me.AnalogOutputGroupBox.TabIndex = 25
         Me.AnalogOutputGroupBox.TabStop = False
-        Me.AnalogOutputGroupBox.Text = "Analog Output"
+        Me.AnalogOutputGroupBox.Text = "Analog Outputs"
         '
         'AnalogOutputBar
         '
@@ -291,18 +335,18 @@ Partial Class VBTERMINALFORM
         Me.AnalogOutputBarLabel.AutoSize = True
         Me.AnalogOutputBarLabel.Location = New System.Drawing.Point(3, 19)
         Me.AnalogOutputBarLabel.Name = "AnalogOutputBarLabel"
-        Me.AnalogOutputBarLabel.Size = New System.Drawing.Size(91, 16)
+        Me.AnalogOutputBarLabel.Size = New System.Drawing.Size(101, 16)
         Me.AnalogOutputBarLabel.TabIndex = 21
-        Me.AnalogOutputBarLabel.Text = "Analog Output"
+        Me.AnalogOutputBarLabel.Text = "Analog Output 1"
         '
-        'AnalogOutputCountVoltageLabel
+        'AnalogOutputVoltageLabel
         '
-        Me.AnalogOutputCountVoltageLabel.AutoSize = True
-        Me.AnalogOutputCountVoltageLabel.Location = New System.Drawing.Point(3, 113)
-        Me.AnalogOutputCountVoltageLabel.Name = "AnalogOutputCountVoltageLabel"
-        Me.AnalogOutputCountVoltageLabel.Size = New System.Drawing.Size(141, 16)
-        Me.AnalogOutputCountVoltageLabel.TabIndex = 23
-        Me.AnalogOutputCountVoltageLabel.Text = "Analog Output Voltage"
+        Me.AnalogOutputVoltageLabel.AutoSize = True
+        Me.AnalogOutputVoltageLabel.Location = New System.Drawing.Point(3, 113)
+        Me.AnalogOutputVoltageLabel.Name = "AnalogOutputVoltageLabel"
+        Me.AnalogOutputVoltageLabel.Size = New System.Drawing.Size(141, 16)
+        Me.AnalogOutputVoltageLabel.TabIndex = 23
+        Me.AnalogOutputVoltageLabel.Text = "Analog Output Voltage"
         '
         'AnalogOutputCountLabel
         '
@@ -556,7 +600,8 @@ Partial Class VBTERMINALFORM
         Me.SettingsTab.ResumeLayout(False)
         Me.SettingsTab.PerformLayout()
         Me.QYTab.ResumeLayout(False)
-        Me.QYTab.PerformLayout()
+        Me.AnalogInputGroupBox.ResumeLayout(False)
+        Me.AnalogInputGroupBox.PerformLayout()
         Me.AnalogOutputGroupBox.ResumeLayout(False)
         Me.AnalogOutputGroupBox.PerformLayout()
         CType(Me.AnalogOutputBar, System.ComponentModel.ISupportInitialize).EndInit()
@@ -606,8 +651,12 @@ Partial Class VBTERMINALFORM
     Friend WithEvents AnalogOutputCountLabel As Label
     Friend WithEvents AnalogOutputBarLabel As Label
     Friend WithEvents AnalogOutputBar As TrackBar
-    Friend WithEvents AnalogOutputCountVoltageLabel As Label
+    Friend WithEvents AnalogOutputVoltageLabel As Label
     Friend WithEvents QuitButton2 As Button
     Friend WithEvents AnalogOutputGroupBox As GroupBox
-    Friend WithEvents Label1 As Label
+    Friend WithEvents AnalogInputBarLabel As Label
+    Friend WithEvents AnalogInputVoltageLabel As Label
+    Friend WithEvents AnalogInputValueLabel As Label
+    Friend WithEvents AnalogInputGroupBox As GroupBox
+    Friend WithEvents AnalogInputProgressBar As ProgressBar
 End Class
