@@ -34,6 +34,7 @@ Public Class VBTERMINALFORM
 
     'Initially Sets Serial Port information
     Private Sub VBTERMINALFORM_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ASCIITablePicturebox.SizeMode = PictureBoxSizeMode.StretchImage
         PortSelect.Items.Clear()
         PortState = False
         SerialPort1.BaudRate = 9600 '9600 baud rate
@@ -147,12 +148,32 @@ Public Class VBTERMINALFORM
         DataOut = DataTextBox.Text
 
         If PortState = True Then 'Test if port is open
-            If DataOut IsNot "" Then 'Test transmit data is not blank
-                SerialPort1.Write(DataOut)
-                OutTerm.Items.Add(DataOut)
-            Else 'Send Data was blank
-                Timer1.Enabled = True 'restart timer
-                Exit Sub 'Leave
+            If ASCIIRadioButton.Checked Then
+                If DataOut IsNot "" Then 'Test transmit data is not blank
+                    SerialPort1.Write(DataOut)
+                    OutTerm.Items.Add(DataOut)
+                Else 'Send Data was blank
+                    Timer1.Enabled = True 'restart timer
+                    Exit Sub 'Leave
+                End If
+            ElseIf DecimalRadioButton.Checked Then
+                Try
+                    If CInt(DataTextBox.Text) <= 255 And CInt(DataTextBox.Text) >= 0 Then
+
+                        SerialPort1.Write({36, CInt(DataTextBox.Text)}, 0, 2)
+                        OutTerm.Items.Add("$" & "." & Hex(CInt(DataTextBox.Text)))
+
+                    Else
+                        MsgBox("Please use a value from 0 to 255.")
+                        DataTextBox.Select()
+                        DataTextBox.Text = ""
+                    End If
+                Catch ex As Exception
+                    MsgBox("That input is invalid. Please use a decimal number from 0 to 255.")
+                    DataTextBox.Select()
+                    DataTextBox.Text = ""
+                End Try
+
             End If
         Else
             MsgBox("Please configure and open serial port to procede") 'Failure if port is not open
@@ -226,7 +247,7 @@ Public Class VBTERMINALFORM
     Sub QYBoardTabHandle()
         If PortState = True Then
             '*** Read Digital Inputs **************************************************************
-            Dim FinalWritePacket(7) As Byte
+            Dim FinalWritePacket(6) As Byte
             FinalWritePacket(0) = &H30
 
             '*** Write Digital Outputs ************************************************************
@@ -250,11 +271,20 @@ Public Class VBTERMINALFORM
             FinalWritePacket(3) = &H51
 
             '*** Write Analog Outputs *************************************************************
-            Dim UpperAnaOutVal As Integer = AnalogOutputBar.Value / (1023 / 255)
+            Dim AnalogOutputBarVal As Integer = AnalogOutputBar.Value
+            Dim UpperAnaOutVal As Integer = 0
+            Dim LowerAnaOutVal As Integer = 0
+
+            For i As Integer = 0 To 7
+                If AnalogOutputBarVal >= 2 ^ (i + 2) Then UpperAnaOutVal += 2 ^ (i) : AnalogOutputBarVal -= 2 ^ (i + 2)
+            Next
+            For i As Integer = 0 To 1
+                If AnalogOutputBarVal >= 2 ^ (i) Then LowerAnaOutVal += 2 ^ (i + 6) : AnalogOutputBarVal -= 2 ^ (i)
+            Next
 
             FinalWritePacket(4) = &H41
             FinalWritePacket(5) = UpperAnaOutVal
-            FinalWritePacket(6) = &HFF
+            FinalWritePacket(6) = LowerAnaOutVal
             AnalogOutputCountLabel.Text = AnalogOutputBar.Value
             AnalogOutputVoltageLabel.Text = CStr(Math.Round(AnalogOutputBar.Value * 3.3 / 1023, 2)) & " V"
 
@@ -274,8 +304,8 @@ Public Class VBTERMINALFORM
                     If DigInVal >= 2 Then ReadDigitalCheckbox6.Checked = True : DigInVal -= 2 Else ReadDigitalCheckbox6.Checked = False
                     If DigInVal >= 1 Then ReadDigitalCheckbox7.Checked = True : DigInVal -= 1 Else ReadDigitalCheckbox7.Checked = False
 
-                    Dim AnaInVal As Integer = (Convert.ToInt32(InValString.Chars(2), 16) * 64) + (Convert.ToInt32(InValString.Chars(3), 16) * 4) + (Convert.ToInt32(InValString.Chars(4), 16) / 32)
-                    'AnalogInputProgressBar.Value = AnaInVal
+                    Dim AnaInVal As Integer = (Convert.ToInt32(InValString.Chars(2), 16) * 64) + (Convert.ToInt32(InValString.Chars(3), 16) * 4) + (Convert.ToInt32(InValString.Chars(4), 16) / 64)
+                    AnalogInputProgressBar.Value = AnaInVal
                     AnalogInputValueLabel.Text = AnaInVal
                     AnalogInputVoltageLabel.Text = CStr(Math.Round(AnaInVal * 3.3 / 1023, 2)) & " V"
 
@@ -285,10 +315,10 @@ Public Class VBTERMINALFORM
                 QYATBoardSampleTime = 0
             Else
                 QYATBoardSampleTime += 1
-            End If
+                End If
 
-        Else
-            PortIsBad()
+            Else
+                PortIsBad()
         End If
     End Sub
 
@@ -360,9 +390,9 @@ Public Class VBTERMINALFORM
                 Case = 1
                     Input1 = DataIn1
                     NewData -= 1
-                    InTerm.Items.Add(Hex(Input1) & Hex(Input2) & Hex(Input3) & Hex(Input4) & Hex(Input5) & Hex(Input6) & Hex(Input7) & Hex(Input8))
-            End Select
 
+            End Select
+            InTerm.Items.Add(Hex(Input1) & Hex(Input2) & Hex(Input3) & Hex(Input4) & Hex(Input5) & Hex(Input6) & Hex(Input7) & Hex(Input8))
             DataIn = Hex(Input1) & Hex(Input2) & Hex(Input3) & Hex(Input4) & Hex(Input5) & Hex(Input6) & Hex(Input7) & Hex(Input8)
 
 

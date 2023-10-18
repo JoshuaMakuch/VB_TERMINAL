@@ -41,6 +41,8 @@ Partial Class VBTERMINALFORM
         Me.InputClearButton = New System.Windows.Forms.Button()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.SettingsTab = New System.Windows.Forms.TabPage()
+        Me.DecimalRadioButton = New System.Windows.Forms.RadioButton()
+        Me.ASCIIRadioButton = New System.Windows.Forms.RadioButton()
         Me.QYTab = New System.Windows.Forms.TabPage()
         Me.AnalogInputGroupBox = New System.Windows.Forms.GroupBox()
         Me.AnalogInputVoltageLabel = New System.Windows.Forms.Label()
@@ -71,6 +73,8 @@ Partial Class VBTERMINALFORM
         Me.ReadDigitalCheckbox5 = New System.Windows.Forms.CheckBox()
         Me.ReadDigitalCheckbox6 = New System.Windows.Forms.CheckBox()
         Me.ReadDigitalCheckbox7 = New System.Windows.Forms.CheckBox()
+        Me.ASCIITableTab = New System.Windows.Forms.TabPage()
+        Me.ASCIITablePicturebox = New System.Windows.Forms.PictureBox()
         Me.TabControl1.SuspendLayout()
         Me.SettingsTab.SuspendLayout()
         Me.QYTab.SuspendLayout()
@@ -79,6 +83,8 @@ Partial Class VBTERMINALFORM
         CType(Me.AnalogOutputBar, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.DigitalOutputsGroupBox.SuspendLayout()
         Me.ReadDigitalInputsGroupBox.SuspendLayout()
+        Me.ASCIITableTab.SuspendLayout()
+        CType(Me.ASCIITablePicturebox, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'SerialPort1
@@ -216,6 +222,7 @@ Partial Class VBTERMINALFORM
         '
         Me.TabControl1.Controls.Add(Me.SettingsTab)
         Me.TabControl1.Controls.Add(Me.QYTab)
+        Me.TabControl1.Controls.Add(Me.ASCIITableTab)
         Me.TabControl1.Location = New System.Drawing.Point(12, 12)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
@@ -224,6 +231,8 @@ Partial Class VBTERMINALFORM
         '
         'SettingsTab
         '
+        Me.SettingsTab.Controls.Add(Me.DecimalRadioButton)
+        Me.SettingsTab.Controls.Add(Me.ASCIIRadioButton)
         Me.SettingsTab.Controls.Add(Me.PortOpen)
         Me.SettingsTab.Controls.Add(Me.DataPacketTextBox)
         Me.SettingsTab.Controls.Add(Me.PortSelect)
@@ -245,6 +254,28 @@ Partial Class VBTERMINALFORM
         Me.SettingsTab.TabIndex = 0
         Me.SettingsTab.Text = "Settings"
         Me.SettingsTab.UseVisualStyleBackColor = True
+        '
+        'DecimalRadioButton
+        '
+        Me.DecimalRadioButton.AutoSize = True
+        Me.DecimalRadioButton.Checked = True
+        Me.DecimalRadioButton.Location = New System.Drawing.Point(716, 64)
+        Me.DecimalRadioButton.Name = "DecimalRadioButton"
+        Me.DecimalRadioButton.Size = New System.Drawing.Size(78, 20)
+        Me.DecimalRadioButton.TabIndex = 15
+        Me.DecimalRadioButton.TabStop = True
+        Me.DecimalRadioButton.Text = "Decimal"
+        Me.DecimalRadioButton.UseVisualStyleBackColor = True
+        '
+        'ASCIIRadioButton
+        '
+        Me.ASCIIRadioButton.AutoSize = True
+        Me.ASCIIRadioButton.Location = New System.Drawing.Point(716, 90)
+        Me.ASCIIRadioButton.Name = "ASCIIRadioButton"
+        Me.ASCIIRadioButton.Size = New System.Drawing.Size(106, 20)
+        Me.ASCIIRadioButton.TabIndex = 14
+        Me.ASCIIRadioButton.Text = "ASCII Format"
+        Me.ASCIIRadioButton.UseVisualStyleBackColor = True
         '
         'QYTab
         '
@@ -286,6 +317,7 @@ Partial Class VBTERMINALFORM
         'AnalogInputProgressBar
         '
         Me.AnalogInputProgressBar.Location = New System.Drawing.Point(6, 42)
+        Me.AnalogInputProgressBar.MarqueeAnimationSpeed = 1
         Me.AnalogInputProgressBar.Maximum = 1023
         Me.AnalogInputProgressBar.Name = "AnalogInputProgressBar"
         Me.AnalogInputProgressBar.Size = New System.Drawing.Size(346, 23)
@@ -588,11 +620,32 @@ Partial Class VBTERMINALFORM
         Me.ReadDigitalCheckbox7.Text = "L"
         Me.ReadDigitalCheckbox7.UseVisualStyleBackColor = True
         '
+        'ASCIITableTab
+        '
+        Me.ASCIITableTab.Controls.Add(Me.ASCIITablePicturebox)
+        Me.ASCIITableTab.Location = New System.Drawing.Point(4, 25)
+        Me.ASCIITableTab.Name = "ASCIITableTab"
+        Me.ASCIITableTab.Padding = New System.Windows.Forms.Padding(3)
+        Me.ASCIITableTab.Size = New System.Drawing.Size(854, 548)
+        Me.ASCIITableTab.TabIndex = 2
+        Me.ASCIITableTab.Text = "ASCII Table"
+        Me.ASCIITableTab.UseVisualStyleBackColor = True
+        '
+        'ASCIITablePicturebox
+        '
+        Me.ASCIITablePicturebox.Image = Global.VB_TERMINAL.My.Resources.Resources.ASCII_Code_Table
+        Me.ASCIITablePicturebox.Location = New System.Drawing.Point(3, 6)
+        Me.ASCIITablePicturebox.Name = "ASCIITablePicturebox"
+        Me.ASCIITablePicturebox.Size = New System.Drawing.Size(845, 536)
+        Me.ASCIITablePicturebox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.ASCIITablePicturebox.TabIndex = 17
+        Me.ASCIITablePicturebox.TabStop = False
+        '
         'VBTERMINALFORM
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(875, 590)
+        Me.ClientSize = New System.Drawing.Size(877, 596)
         Me.Controls.Add(Me.TabControl1)
         Me.Name = "VBTERMINALFORM"
         Me.Text = "VB Terminal Form"
@@ -607,6 +660,8 @@ Partial Class VBTERMINALFORM
         CType(Me.AnalogOutputBar, System.ComponentModel.ISupportInitialize).EndInit()
         Me.DigitalOutputsGroupBox.ResumeLayout(False)
         Me.ReadDigitalInputsGroupBox.ResumeLayout(False)
+        Me.ASCIITableTab.ResumeLayout(False)
+        CType(Me.ASCIITablePicturebox, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -659,4 +714,8 @@ Partial Class VBTERMINALFORM
     Friend WithEvents AnalogInputValueLabel As Label
     Friend WithEvents AnalogInputGroupBox As GroupBox
     Friend WithEvents AnalogInputProgressBar As ProgressBar
+    Friend WithEvents DecimalRadioButton As RadioButton
+    Friend WithEvents ASCIIRadioButton As RadioButton
+    Friend WithEvents ASCIITableTab As TabPage
+    Friend WithEvents ASCIITablePicturebox As PictureBox
 End Class
