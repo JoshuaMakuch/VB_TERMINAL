@@ -23,6 +23,7 @@ Public Class VBTERMINALFORM
     Dim SettingsButtonState As Boolean
     Dim QYATBoardSampleTime As Integer
 
+
     'On Form unload, close the port as to not have it stuck open and inaccessible
     Private Sub VBTERMINALFORM_UnLoad(sender As Object, e As EventArgs) Handles MyBase.Load
         Try
@@ -188,7 +189,6 @@ Public Class VBTERMINALFORM
         DataTextBox.Text = ""
     End Sub
 
-
     'Handles output clear button click
     Private Sub OutputClearButton_Click(sender As Object, e As EventArgs) Handles OutputClearButton.Click
         OutTerm.Items.Clear()
@@ -210,7 +210,7 @@ Public Class VBTERMINALFORM
     'Whenever the com port says we have information
     Private Sub SerialPort1_DataReceived(sender As Object, e As SerialDataReceivedEventArgs) Handles SerialPort1.DataReceived
 
-        SerialPort1.Read(receiveByte, 0, 8)
+        SerialPort1.Read(receiveByte, 0, 8) 'This receives new data from th serial port
 
         Select Case NewData
             Case = 0
@@ -254,7 +254,7 @@ Public Class VBTERMINALFORM
 
             Dim FinalDec As Integer 'This holds onto all weighted button data
 
-            If DigitalWriteCheckBox0.Checked Then FinalDec = FinalDec + 128
+            If DigitalWriteCheckBox0.Checked Then FinalDec = FinalDec + 128 'This goes down the list of all possible checkboxes and sets the sent value to the weights of the buttons
             If DigitalWriteCheckBox1.Checked Then FinalDec = FinalDec + 64
             If DigitalWriteCheckBox2.Checked Then FinalDec = FinalDec + 32
             If DigitalWriteCheckBox3.Checked Then FinalDec = FinalDec + 16
@@ -271,6 +271,7 @@ Public Class VBTERMINALFORM
             FinalWritePacket(3) = &H51
 
             '*** Write Analog Outputs *************************************************************
+            'This takes the output bar value and converts it into two bytes with the appropriate weights
             Dim AnalogOutputBarVal As Integer = AnalogOutputBar.Value
             Dim UpperAnaOutVal As Integer = 0
             Dim LowerAnaOutVal As Integer = 0
@@ -290,7 +291,11 @@ Public Class VBTERMINALFORM
 
 
             '*** Read Full Input String ***********************************************************
+            'This finally reads all the appropriate data to the qy@ board
             WritePacketToOutput(FinalWritePacket)
+
+            'Once about three timer ticks have occured the data from the QY@ board is read and translated and put into the correct visual areas
+            'This is all done is the same fasion as how it was sent, but backwards.
             If QYATBoardSampleTime > 3 Then
                 Try
                     Dim InValString As String = CheckForReceived()
@@ -305,7 +310,7 @@ Public Class VBTERMINALFORM
                     If DigInVal >= 1 Then ReadDigitalCheckbox7.Checked = True : DigInVal -= 1 Else ReadDigitalCheckbox7.Checked = False
 
                     Dim AnaInVal As Integer = (Convert.ToInt32(InValString.Chars(2), 16) * 64) + (Convert.ToInt32(InValString.Chars(3), 16) * 4) + (Convert.ToInt32(InValString.Chars(4), 16) / 64)
-                    AnalogInputProgressBar.Value = AnaInVal
+                    AnalogInputBar.Value = AnaInVal
                     AnalogInputValueLabel.Text = AnaInVal
                     AnalogInputVoltageLabel.Text = CStr(Math.Round(AnaInVal * 3.3 / 1023, 2)) & " V"
 
@@ -329,7 +334,7 @@ Public Class VBTERMINALFORM
         Dim NewVar(8) As Byte
         If PortState = True Then 'Test if port is open
             Try
-                For i As Integer = 0 To MyMessage.Length - 1
+                For i As Integer = 0 To MyMessage.Length - 1 'This recreates the incoming byte array to ensure correct information is sent
                     NewVar(i) = MyMessage(i)
                     OutTermString = OutTermString & "." & Hex(MyMessage(i))
                 Next
@@ -347,6 +352,7 @@ Public Class VBTERMINALFORM
     'This is used to recieve new data only when desired
     Private Function CheckForReceived()
 
+        'If called it will put all 7 bytes of input data in the the DataIn variable and sends it.
         Dim DataIn As String = ""
         Dim Input1, Input2, Input3, Input4, Input5, Input6, Input7, Input8 As Integer
 

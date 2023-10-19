@@ -23,6 +23,7 @@ Partial Class VBTERMINALFORM
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(VBTERMINALFORM))
         Me.SerialPort1 = New System.IO.Ports.SerialPort(Me.components)
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.PortSelect = New System.Windows.Forms.ListBox()
@@ -45,8 +46,8 @@ Partial Class VBTERMINALFORM
         Me.ASCIIRadioButton = New System.Windows.Forms.RadioButton()
         Me.QYTab = New System.Windows.Forms.TabPage()
         Me.AnalogInputGroupBox = New System.Windows.Forms.GroupBox()
+        Me.AnalogInputBar = New System.Windows.Forms.TrackBar()
         Me.AnalogInputVoltageLabel = New System.Windows.Forms.Label()
-        Me.AnalogInputProgressBar = New System.Windows.Forms.ProgressBar()
         Me.AnalogInputValueLabel = New System.Windows.Forms.Label()
         Me.AnalogInputBarLabel = New System.Windows.Forms.Label()
         Me.AnalogOutputGroupBox = New System.Windows.Forms.GroupBox()
@@ -79,6 +80,7 @@ Partial Class VBTERMINALFORM
         Me.SettingsTab.SuspendLayout()
         Me.QYTab.SuspendLayout()
         Me.AnalogInputGroupBox.SuspendLayout()
+        CType(Me.AnalogInputBar, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.AnalogOutputGroupBox.SuspendLayout()
         CType(Me.AnalogOutputBar, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.DigitalOutputsGroupBox.SuspendLayout()
@@ -226,7 +228,7 @@ Partial Class VBTERMINALFORM
         Me.TabControl1.Location = New System.Drawing.Point(12, 12)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(862, 577)
+        Me.TabControl1.Size = New System.Drawing.Size(905, 612)
         Me.TabControl1.TabIndex = 16
         '
         'SettingsTab
@@ -250,7 +252,7 @@ Partial Class VBTERMINALFORM
         Me.SettingsTab.Location = New System.Drawing.Point(4, 25)
         Me.SettingsTab.Name = "SettingsTab"
         Me.SettingsTab.Padding = New System.Windows.Forms.Padding(3)
-        Me.SettingsTab.Size = New System.Drawing.Size(854, 548)
+        Me.SettingsTab.Size = New System.Drawing.Size(897, 583)
         Me.SettingsTab.TabIndex = 0
         Me.SettingsTab.Text = "Settings"
         Me.SettingsTab.UseVisualStyleBackColor = True
@@ -287,46 +289,48 @@ Partial Class VBTERMINALFORM
         Me.QYTab.Location = New System.Drawing.Point(4, 25)
         Me.QYTab.Name = "QYTab"
         Me.QYTab.Padding = New System.Windows.Forms.Padding(3)
-        Me.QYTab.Size = New System.Drawing.Size(854, 548)
+        Me.QYTab.Size = New System.Drawing.Size(897, 583)
         Me.QYTab.TabIndex = 1
         Me.QYTab.Text = "QY@ Board Control"
         Me.QYTab.UseVisualStyleBackColor = True
         '
         'AnalogInputGroupBox
         '
+        Me.AnalogInputGroupBox.Controls.Add(Me.AnalogInputBar)
         Me.AnalogInputGroupBox.Controls.Add(Me.AnalogInputVoltageLabel)
-        Me.AnalogInputGroupBox.Controls.Add(Me.AnalogInputProgressBar)
         Me.AnalogInputGroupBox.Controls.Add(Me.AnalogInputValueLabel)
         Me.AnalogInputGroupBox.Controls.Add(Me.AnalogInputBarLabel)
-        Me.AnalogInputGroupBox.Location = New System.Drawing.Point(6, 279)
+        Me.AnalogInputGroupBox.Location = New System.Drawing.Point(6, 173)
         Me.AnalogInputGroupBox.Name = "AnalogInputGroupBox"
-        Me.AnalogInputGroupBox.Size = New System.Drawing.Size(368, 124)
+        Me.AnalogInputGroupBox.Size = New System.Drawing.Size(208, 391)
         Me.AnalogInputGroupBox.TabIndex = 28
         Me.AnalogInputGroupBox.TabStop = False
         Me.AnalogInputGroupBox.Text = "Analog Inputs"
         '
+        'AnalogInputBar
+        '
+        Me.AnalogInputBar.BackColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.AnalogInputBar.Enabled = False
+        Me.AnalogInputBar.Location = New System.Drawing.Point(7, 42)
+        Me.AnalogInputBar.Maximum = 1023
+        Me.AnalogInputBar.Name = "AnalogInputBar"
+        Me.AnalogInputBar.Orientation = System.Windows.Forms.Orientation.Vertical
+        Me.AnalogInputBar.Size = New System.Drawing.Size(56, 336)
+        Me.AnalogInputBar.TabIndex = 24
+        '
         'AnalogInputVoltageLabel
         '
         Me.AnalogInputVoltageLabel.AutoSize = True
-        Me.AnalogInputVoltageLabel.Location = New System.Drawing.Point(6, 85)
+        Me.AnalogInputVoltageLabel.Location = New System.Drawing.Point(69, 58)
         Me.AnalogInputVoltageLabel.Name = "AnalogInputVoltageLabel"
         Me.AnalogInputVoltageLabel.Size = New System.Drawing.Size(131, 16)
         Me.AnalogInputVoltageLabel.TabIndex = 29
         Me.AnalogInputVoltageLabel.Text = "Analog Input Voltage"
         '
-        'AnalogInputProgressBar
-        '
-        Me.AnalogInputProgressBar.Location = New System.Drawing.Point(6, 42)
-        Me.AnalogInputProgressBar.MarqueeAnimationSpeed = 1
-        Me.AnalogInputProgressBar.Maximum = 1023
-        Me.AnalogInputProgressBar.Name = "AnalogInputProgressBar"
-        Me.AnalogInputProgressBar.Size = New System.Drawing.Size(346, 23)
-        Me.AnalogInputProgressBar.TabIndex = 27
-        '
         'AnalogInputValueLabel
         '
         Me.AnalogInputValueLabel.AutoSize = True
-        Me.AnalogInputValueLabel.Location = New System.Drawing.Point(4, 68)
+        Me.AnalogInputValueLabel.Location = New System.Drawing.Point(69, 42)
         Me.AnalogInputValueLabel.Name = "AnalogInputValueLabel"
         Me.AnalogInputValueLabel.Size = New System.Drawing.Size(119, 16)
         Me.AnalogInputValueLabel.TabIndex = 28
@@ -347,19 +351,22 @@ Partial Class VBTERMINALFORM
         Me.AnalogOutputGroupBox.Controls.Add(Me.AnalogOutputBarLabel)
         Me.AnalogOutputGroupBox.Controls.Add(Me.AnalogOutputVoltageLabel)
         Me.AnalogOutputGroupBox.Controls.Add(Me.AnalogOutputCountLabel)
-        Me.AnalogOutputGroupBox.Location = New System.Drawing.Point(6, 132)
+        Me.AnalogOutputGroupBox.Location = New System.Drawing.Point(220, 173)
         Me.AnalogOutputGroupBox.Name = "AnalogOutputGroupBox"
-        Me.AnalogOutputGroupBox.Size = New System.Drawing.Size(368, 141)
+        Me.AnalogOutputGroupBox.Size = New System.Drawing.Size(217, 391)
         Me.AnalogOutputGroupBox.TabIndex = 25
         Me.AnalogOutputGroupBox.TabStop = False
         Me.AnalogOutputGroupBox.Text = "Analog Outputs"
         '
         'AnalogOutputBar
         '
+        Me.AnalogOutputBar.BackColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.AnalogOutputBar.Cursor = System.Windows.Forms.Cursors.NoMoveVert
         Me.AnalogOutputBar.Location = New System.Drawing.Point(6, 38)
         Me.AnalogOutputBar.Maximum = 1023
         Me.AnalogOutputBar.Name = "AnalogOutputBar"
-        Me.AnalogOutputBar.Size = New System.Drawing.Size(346, 56)
+        Me.AnalogOutputBar.Orientation = System.Windows.Forms.Orientation.Vertical
+        Me.AnalogOutputBar.Size = New System.Drawing.Size(56, 346)
         Me.AnalogOutputBar.TabIndex = 20
         '
         'AnalogOutputBarLabel
@@ -374,7 +381,7 @@ Partial Class VBTERMINALFORM
         'AnalogOutputVoltageLabel
         '
         Me.AnalogOutputVoltageLabel.AutoSize = True
-        Me.AnalogOutputVoltageLabel.Location = New System.Drawing.Point(3, 113)
+        Me.AnalogOutputVoltageLabel.Location = New System.Drawing.Point(68, 63)
         Me.AnalogOutputVoltageLabel.Name = "AnalogOutputVoltageLabel"
         Me.AnalogOutputVoltageLabel.Size = New System.Drawing.Size(141, 16)
         Me.AnalogOutputVoltageLabel.TabIndex = 23
@@ -383,7 +390,7 @@ Partial Class VBTERMINALFORM
         'AnalogOutputCountLabel
         '
         Me.AnalogOutputCountLabel.AutoSize = True
-        Me.AnalogOutputCountLabel.Location = New System.Drawing.Point(3, 97)
+        Me.AnalogOutputCountLabel.Location = New System.Drawing.Point(68, 41)
         Me.AnalogOutputCountLabel.Name = "AnalogOutputCountLabel"
         Me.AnalogOutputCountLabel.Size = New System.Drawing.Size(129, 16)
         Me.AnalogOutputCountLabel.TabIndex = 22
@@ -391,7 +398,7 @@ Partial Class VBTERMINALFORM
         '
         'QuitButton2
         '
-        Me.QuitButton2.Location = New System.Drawing.Point(750, 497)
+        Me.QuitButton2.Location = New System.Drawing.Point(790, 532)
         Me.QuitButton2.Name = "QuitButton2"
         Me.QuitButton2.Size = New System.Drawing.Size(101, 45)
         Me.QuitButton2.TabIndex = 24
@@ -408,9 +415,9 @@ Partial Class VBTERMINALFORM
         Me.DigitalOutputsGroupBox.Controls.Add(Me.DigitalWriteCheckBox5)
         Me.DigitalOutputsGroupBox.Controls.Add(Me.DigitalWriteCheckBox6)
         Me.DigitalOutputsGroupBox.Controls.Add(Me.DigitalWriteCheckBox7)
-        Me.DigitalOutputsGroupBox.Location = New System.Drawing.Point(6, 69)
+        Me.DigitalOutputsGroupBox.Location = New System.Drawing.Point(6, 94)
         Me.DigitalOutputsGroupBox.Name = "DigitalOutputsGroupBox"
-        Me.DigitalOutputsGroupBox.Size = New System.Drawing.Size(254, 57)
+        Me.DigitalOutputsGroupBox.Size = New System.Drawing.Size(457, 71)
         Me.DigitalOutputsGroupBox.TabIndex = 19
         Me.DigitalOutputsGroupBox.TabStop = False
         Me.DigitalOutputsGroupBox.Text = "Digital Outputs"
@@ -421,7 +428,7 @@ Partial Class VBTERMINALFORM
         Me.DigitalWriteCheckBox0.Location = New System.Drawing.Point(6, 21)
         Me.DigitalWriteCheckBox0.MaximumSize = New System.Drawing.Size(50, 50)
         Me.DigitalWriteCheckBox0.Name = "DigitalWriteCheckBox0"
-        Me.DigitalWriteCheckBox0.Size = New System.Drawing.Size(25, 25)
+        Me.DigitalWriteCheckBox0.Size = New System.Drawing.Size(50, 41)
         Me.DigitalWriteCheckBox0.TabIndex = 0
         Me.DigitalWriteCheckBox0.TabStop = False
         Me.DigitalWriteCheckBox0.Text = "MSB"
@@ -430,10 +437,10 @@ Partial Class VBTERMINALFORM
         'DigitalWriteCheckBox1
         '
         Me.DigitalWriteCheckBox1.Appearance = System.Windows.Forms.Appearance.Button
-        Me.DigitalWriteCheckBox1.Location = New System.Drawing.Point(37, 21)
+        Me.DigitalWriteCheckBox1.Location = New System.Drawing.Point(62, 21)
         Me.DigitalWriteCheckBox1.MaximumSize = New System.Drawing.Size(50, 50)
         Me.DigitalWriteCheckBox1.Name = "DigitalWriteCheckBox1"
-        Me.DigitalWriteCheckBox1.Size = New System.Drawing.Size(25, 25)
+        Me.DigitalWriteCheckBox1.Size = New System.Drawing.Size(50, 41)
         Me.DigitalWriteCheckBox1.TabIndex = 2
         Me.DigitalWriteCheckBox1.TabStop = False
         Me.DigitalWriteCheckBox1.UseVisualStyleBackColor = True
@@ -441,10 +448,10 @@ Partial Class VBTERMINALFORM
         'DigitalWriteCheckBox2
         '
         Me.DigitalWriteCheckBox2.Appearance = System.Windows.Forms.Appearance.Button
-        Me.DigitalWriteCheckBox2.Location = New System.Drawing.Point(68, 21)
+        Me.DigitalWriteCheckBox2.Location = New System.Drawing.Point(118, 21)
         Me.DigitalWriteCheckBox2.MaximumSize = New System.Drawing.Size(50, 50)
         Me.DigitalWriteCheckBox2.Name = "DigitalWriteCheckBox2"
-        Me.DigitalWriteCheckBox2.Size = New System.Drawing.Size(25, 25)
+        Me.DigitalWriteCheckBox2.Size = New System.Drawing.Size(50, 41)
         Me.DigitalWriteCheckBox2.TabIndex = 3
         Me.DigitalWriteCheckBox2.TabStop = False
         Me.DigitalWriteCheckBox2.UseVisualStyleBackColor = True
@@ -452,10 +459,10 @@ Partial Class VBTERMINALFORM
         'DigitalWriteCheckBox3
         '
         Me.DigitalWriteCheckBox3.Appearance = System.Windows.Forms.Appearance.Button
-        Me.DigitalWriteCheckBox3.Location = New System.Drawing.Point(99, 21)
+        Me.DigitalWriteCheckBox3.Location = New System.Drawing.Point(174, 21)
         Me.DigitalWriteCheckBox3.MaximumSize = New System.Drawing.Size(50, 50)
         Me.DigitalWriteCheckBox3.Name = "DigitalWriteCheckBox3"
-        Me.DigitalWriteCheckBox3.Size = New System.Drawing.Size(25, 25)
+        Me.DigitalWriteCheckBox3.Size = New System.Drawing.Size(50, 41)
         Me.DigitalWriteCheckBox3.TabIndex = 4
         Me.DigitalWriteCheckBox3.TabStop = False
         Me.DigitalWriteCheckBox3.UseVisualStyleBackColor = True
@@ -463,10 +470,10 @@ Partial Class VBTERMINALFORM
         'DigitalWriteCheckBox4
         '
         Me.DigitalWriteCheckBox4.Appearance = System.Windows.Forms.Appearance.Button
-        Me.DigitalWriteCheckBox4.Location = New System.Drawing.Point(130, 21)
+        Me.DigitalWriteCheckBox4.Location = New System.Drawing.Point(230, 21)
         Me.DigitalWriteCheckBox4.MaximumSize = New System.Drawing.Size(50, 50)
         Me.DigitalWriteCheckBox4.Name = "DigitalWriteCheckBox4"
-        Me.DigitalWriteCheckBox4.Size = New System.Drawing.Size(25, 25)
+        Me.DigitalWriteCheckBox4.Size = New System.Drawing.Size(50, 41)
         Me.DigitalWriteCheckBox4.TabIndex = 5
         Me.DigitalWriteCheckBox4.TabStop = False
         Me.DigitalWriteCheckBox4.UseVisualStyleBackColor = True
@@ -474,10 +481,10 @@ Partial Class VBTERMINALFORM
         'DigitalWriteCheckBox5
         '
         Me.DigitalWriteCheckBox5.Appearance = System.Windows.Forms.Appearance.Button
-        Me.DigitalWriteCheckBox5.Location = New System.Drawing.Point(161, 21)
+        Me.DigitalWriteCheckBox5.Location = New System.Drawing.Point(286, 21)
         Me.DigitalWriteCheckBox5.MaximumSize = New System.Drawing.Size(50, 50)
         Me.DigitalWriteCheckBox5.Name = "DigitalWriteCheckBox5"
-        Me.DigitalWriteCheckBox5.Size = New System.Drawing.Size(25, 25)
+        Me.DigitalWriteCheckBox5.Size = New System.Drawing.Size(50, 41)
         Me.DigitalWriteCheckBox5.TabIndex = 6
         Me.DigitalWriteCheckBox5.TabStop = False
         Me.DigitalWriteCheckBox5.UseVisualStyleBackColor = True
@@ -485,25 +492,28 @@ Partial Class VBTERMINALFORM
         'DigitalWriteCheckBox6
         '
         Me.DigitalWriteCheckBox6.Appearance = System.Windows.Forms.Appearance.Button
-        Me.DigitalWriteCheckBox6.Location = New System.Drawing.Point(192, 21)
+        Me.DigitalWriteCheckBox6.BackColor = System.Drawing.Color.Transparent
+        Me.DigitalWriteCheckBox6.Location = New System.Drawing.Point(342, 21)
         Me.DigitalWriteCheckBox6.MaximumSize = New System.Drawing.Size(50, 50)
         Me.DigitalWriteCheckBox6.Name = "DigitalWriteCheckBox6"
-        Me.DigitalWriteCheckBox6.Size = New System.Drawing.Size(25, 25)
+        Me.DigitalWriteCheckBox6.Size = New System.Drawing.Size(50, 41)
         Me.DigitalWriteCheckBox6.TabIndex = 7
         Me.DigitalWriteCheckBox6.TabStop = False
-        Me.DigitalWriteCheckBox6.UseVisualStyleBackColor = True
+        Me.DigitalWriteCheckBox6.UseVisualStyleBackColor = False
         '
         'DigitalWriteCheckBox7
         '
         Me.DigitalWriteCheckBox7.Appearance = System.Windows.Forms.Appearance.Button
-        Me.DigitalWriteCheckBox7.Location = New System.Drawing.Point(223, 21)
+        Me.DigitalWriteCheckBox7.BackColor = System.Drawing.Color.Transparent
+        Me.DigitalWriteCheckBox7.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
+        Me.DigitalWriteCheckBox7.Location = New System.Drawing.Point(398, 21)
         Me.DigitalWriteCheckBox7.MaximumSize = New System.Drawing.Size(50, 50)
         Me.DigitalWriteCheckBox7.Name = "DigitalWriteCheckBox7"
-        Me.DigitalWriteCheckBox7.Size = New System.Drawing.Size(25, 25)
+        Me.DigitalWriteCheckBox7.Size = New System.Drawing.Size(50, 41)
         Me.DigitalWriteCheckBox7.TabIndex = 8
         Me.DigitalWriteCheckBox7.TabStop = False
         Me.DigitalWriteCheckBox7.Text = "LSB"
-        Me.DigitalWriteCheckBox7.UseVisualStyleBackColor = True
+        Me.DigitalWriteCheckBox7.UseVisualStyleBackColor = False
         '
         'ReadDigitalInputsGroupBox
         '
@@ -517,7 +527,7 @@ Partial Class VBTERMINALFORM
         Me.ReadDigitalInputsGroupBox.Controls.Add(Me.ReadDigitalCheckbox7)
         Me.ReadDigitalInputsGroupBox.Location = New System.Drawing.Point(6, 6)
         Me.ReadDigitalInputsGroupBox.Name = "ReadDigitalInputsGroupBox"
-        Me.ReadDigitalInputsGroupBox.Size = New System.Drawing.Size(254, 57)
+        Me.ReadDigitalInputsGroupBox.Size = New System.Drawing.Size(457, 82)
         Me.ReadDigitalInputsGroupBox.TabIndex = 18
         Me.ReadDigitalInputsGroupBox.TabStop = False
         Me.ReadDigitalInputsGroupBox.Text = "Digital Inputs"
@@ -529,7 +539,7 @@ Partial Class VBTERMINALFORM
         Me.ReadDigitalCheckbox0.Location = New System.Drawing.Point(6, 21)
         Me.ReadDigitalCheckbox0.MaximumSize = New System.Drawing.Size(50, 50)
         Me.ReadDigitalCheckbox0.Name = "ReadDigitalCheckbox0"
-        Me.ReadDigitalCheckbox0.Size = New System.Drawing.Size(25, 25)
+        Me.ReadDigitalCheckbox0.Size = New System.Drawing.Size(50, 47)
         Me.ReadDigitalCheckbox0.TabIndex = 0
         Me.ReadDigitalCheckbox0.TabStop = False
         Me.ReadDigitalCheckbox0.Text = "MSB"
@@ -539,10 +549,10 @@ Partial Class VBTERMINALFORM
         '
         Me.ReadDigitalCheckbox1.Appearance = System.Windows.Forms.Appearance.Button
         Me.ReadDigitalCheckbox1.Enabled = False
-        Me.ReadDigitalCheckbox1.Location = New System.Drawing.Point(37, 21)
+        Me.ReadDigitalCheckbox1.Location = New System.Drawing.Point(62, 21)
         Me.ReadDigitalCheckbox1.MaximumSize = New System.Drawing.Size(50, 50)
         Me.ReadDigitalCheckbox1.Name = "ReadDigitalCheckbox1"
-        Me.ReadDigitalCheckbox1.Size = New System.Drawing.Size(25, 25)
+        Me.ReadDigitalCheckbox1.Size = New System.Drawing.Size(50, 47)
         Me.ReadDigitalCheckbox1.TabIndex = 2
         Me.ReadDigitalCheckbox1.TabStop = False
         Me.ReadDigitalCheckbox1.UseVisualStyleBackColor = True
@@ -551,10 +561,10 @@ Partial Class VBTERMINALFORM
         '
         Me.ReadDigitalCheckbox2.Appearance = System.Windows.Forms.Appearance.Button
         Me.ReadDigitalCheckbox2.Enabled = False
-        Me.ReadDigitalCheckbox2.Location = New System.Drawing.Point(68, 21)
+        Me.ReadDigitalCheckbox2.Location = New System.Drawing.Point(118, 21)
         Me.ReadDigitalCheckbox2.MaximumSize = New System.Drawing.Size(50, 50)
         Me.ReadDigitalCheckbox2.Name = "ReadDigitalCheckbox2"
-        Me.ReadDigitalCheckbox2.Size = New System.Drawing.Size(25, 25)
+        Me.ReadDigitalCheckbox2.Size = New System.Drawing.Size(50, 47)
         Me.ReadDigitalCheckbox2.TabIndex = 3
         Me.ReadDigitalCheckbox2.TabStop = False
         Me.ReadDigitalCheckbox2.UseVisualStyleBackColor = True
@@ -563,10 +573,10 @@ Partial Class VBTERMINALFORM
         '
         Me.ReadDigitalCheckbox3.Appearance = System.Windows.Forms.Appearance.Button
         Me.ReadDigitalCheckbox3.Enabled = False
-        Me.ReadDigitalCheckbox3.Location = New System.Drawing.Point(99, 21)
+        Me.ReadDigitalCheckbox3.Location = New System.Drawing.Point(174, 21)
         Me.ReadDigitalCheckbox3.MaximumSize = New System.Drawing.Size(50, 50)
         Me.ReadDigitalCheckbox3.Name = "ReadDigitalCheckbox3"
-        Me.ReadDigitalCheckbox3.Size = New System.Drawing.Size(25, 25)
+        Me.ReadDigitalCheckbox3.Size = New System.Drawing.Size(50, 47)
         Me.ReadDigitalCheckbox3.TabIndex = 4
         Me.ReadDigitalCheckbox3.TabStop = False
         Me.ReadDigitalCheckbox3.UseVisualStyleBackColor = True
@@ -575,10 +585,10 @@ Partial Class VBTERMINALFORM
         '
         Me.ReadDigitalCheckbox4.Appearance = System.Windows.Forms.Appearance.Button
         Me.ReadDigitalCheckbox4.Enabled = False
-        Me.ReadDigitalCheckbox4.Location = New System.Drawing.Point(130, 21)
+        Me.ReadDigitalCheckbox4.Location = New System.Drawing.Point(230, 21)
         Me.ReadDigitalCheckbox4.MaximumSize = New System.Drawing.Size(50, 50)
         Me.ReadDigitalCheckbox4.Name = "ReadDigitalCheckbox4"
-        Me.ReadDigitalCheckbox4.Size = New System.Drawing.Size(25, 25)
+        Me.ReadDigitalCheckbox4.Size = New System.Drawing.Size(50, 47)
         Me.ReadDigitalCheckbox4.TabIndex = 5
         Me.ReadDigitalCheckbox4.TabStop = False
         Me.ReadDigitalCheckbox4.UseVisualStyleBackColor = True
@@ -587,10 +597,10 @@ Partial Class VBTERMINALFORM
         '
         Me.ReadDigitalCheckbox5.Appearance = System.Windows.Forms.Appearance.Button
         Me.ReadDigitalCheckbox5.Enabled = False
-        Me.ReadDigitalCheckbox5.Location = New System.Drawing.Point(161, 21)
+        Me.ReadDigitalCheckbox5.Location = New System.Drawing.Point(286, 21)
         Me.ReadDigitalCheckbox5.MaximumSize = New System.Drawing.Size(50, 50)
         Me.ReadDigitalCheckbox5.Name = "ReadDigitalCheckbox5"
-        Me.ReadDigitalCheckbox5.Size = New System.Drawing.Size(25, 25)
+        Me.ReadDigitalCheckbox5.Size = New System.Drawing.Size(50, 47)
         Me.ReadDigitalCheckbox5.TabIndex = 6
         Me.ReadDigitalCheckbox5.TabStop = False
         Me.ReadDigitalCheckbox5.UseVisualStyleBackColor = True
@@ -599,10 +609,10 @@ Partial Class VBTERMINALFORM
         '
         Me.ReadDigitalCheckbox6.Appearance = System.Windows.Forms.Appearance.Button
         Me.ReadDigitalCheckbox6.Enabled = False
-        Me.ReadDigitalCheckbox6.Location = New System.Drawing.Point(192, 21)
+        Me.ReadDigitalCheckbox6.Location = New System.Drawing.Point(342, 21)
         Me.ReadDigitalCheckbox6.MaximumSize = New System.Drawing.Size(50, 50)
         Me.ReadDigitalCheckbox6.Name = "ReadDigitalCheckbox6"
-        Me.ReadDigitalCheckbox6.Size = New System.Drawing.Size(25, 25)
+        Me.ReadDigitalCheckbox6.Size = New System.Drawing.Size(50, 47)
         Me.ReadDigitalCheckbox6.TabIndex = 7
         Me.ReadDigitalCheckbox6.TabStop = False
         Me.ReadDigitalCheckbox6.UseVisualStyleBackColor = True
@@ -610,15 +620,17 @@ Partial Class VBTERMINALFORM
         'ReadDigitalCheckbox7
         '
         Me.ReadDigitalCheckbox7.Appearance = System.Windows.Forms.Appearance.Button
+        Me.ReadDigitalCheckbox7.BackColor = System.Drawing.Color.Transparent
         Me.ReadDigitalCheckbox7.Enabled = False
-        Me.ReadDigitalCheckbox7.Location = New System.Drawing.Point(223, 21)
+        Me.ReadDigitalCheckbox7.ForeColor = System.Drawing.Color.Black
+        Me.ReadDigitalCheckbox7.Location = New System.Drawing.Point(398, 21)
         Me.ReadDigitalCheckbox7.MaximumSize = New System.Drawing.Size(50, 50)
         Me.ReadDigitalCheckbox7.Name = "ReadDigitalCheckbox7"
-        Me.ReadDigitalCheckbox7.Size = New System.Drawing.Size(25, 25)
+        Me.ReadDigitalCheckbox7.Size = New System.Drawing.Size(50, 47)
         Me.ReadDigitalCheckbox7.TabIndex = 8
         Me.ReadDigitalCheckbox7.TabStop = False
-        Me.ReadDigitalCheckbox7.Text = "L"
-        Me.ReadDigitalCheckbox7.UseVisualStyleBackColor = True
+        Me.ReadDigitalCheckbox7.Text = "LSB"
+        Me.ReadDigitalCheckbox7.UseVisualStyleBackColor = False
         '
         'ASCIITableTab
         '
@@ -626,17 +638,17 @@ Partial Class VBTERMINALFORM
         Me.ASCIITableTab.Location = New System.Drawing.Point(4, 25)
         Me.ASCIITableTab.Name = "ASCIITableTab"
         Me.ASCIITableTab.Padding = New System.Windows.Forms.Padding(3)
-        Me.ASCIITableTab.Size = New System.Drawing.Size(854, 548)
+        Me.ASCIITableTab.Size = New System.Drawing.Size(897, 583)
         Me.ASCIITableTab.TabIndex = 2
         Me.ASCIITableTab.Text = "ASCII Table"
         Me.ASCIITableTab.UseVisualStyleBackColor = True
         '
         'ASCIITablePicturebox
         '
-        Me.ASCIITablePicturebox.Image = Global.VB_TERMINAL.My.Resources.Resources.ASCII_Code_Table
+        Me.ASCIITablePicturebox.Image = CType(resources.GetObject("ASCIITablePicturebox.Image"), System.Drawing.Image)
         Me.ASCIITablePicturebox.Location = New System.Drawing.Point(3, 6)
         Me.ASCIITablePicturebox.Name = "ASCIITablePicturebox"
-        Me.ASCIITablePicturebox.Size = New System.Drawing.Size(845, 536)
+        Me.ASCIITablePicturebox.Size = New System.Drawing.Size(891, 574)
         Me.ASCIITablePicturebox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.ASCIITablePicturebox.TabIndex = 17
         Me.ASCIITablePicturebox.TabStop = False
@@ -645,7 +657,7 @@ Partial Class VBTERMINALFORM
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(877, 596)
+        Me.ClientSize = New System.Drawing.Size(919, 636)
         Me.Controls.Add(Me.TabControl1)
         Me.Name = "VBTERMINALFORM"
         Me.Text = "VB Terminal Form"
@@ -655,6 +667,7 @@ Partial Class VBTERMINALFORM
         Me.QYTab.ResumeLayout(False)
         Me.AnalogInputGroupBox.ResumeLayout(False)
         Me.AnalogInputGroupBox.PerformLayout()
+        CType(Me.AnalogInputBar, System.ComponentModel.ISupportInitialize).EndInit()
         Me.AnalogOutputGroupBox.ResumeLayout(False)
         Me.AnalogOutputGroupBox.PerformLayout()
         CType(Me.AnalogOutputBar, System.ComponentModel.ISupportInitialize).EndInit()
@@ -713,9 +726,9 @@ Partial Class VBTERMINALFORM
     Friend WithEvents AnalogInputVoltageLabel As Label
     Friend WithEvents AnalogInputValueLabel As Label
     Friend WithEvents AnalogInputGroupBox As GroupBox
-    Friend WithEvents AnalogInputProgressBar As ProgressBar
     Friend WithEvents DecimalRadioButton As RadioButton
     Friend WithEvents ASCIIRadioButton As RadioButton
     Friend WithEvents ASCIITableTab As TabPage
     Friend WithEvents ASCIITablePicturebox As PictureBox
+    Friend WithEvents AnalogInputBar As TrackBar
 End Class
