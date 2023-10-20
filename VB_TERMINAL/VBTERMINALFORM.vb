@@ -10,6 +10,7 @@ Imports System.Runtime.InteropServices
 Imports System.Runtime.Remoting.Messaging
 Imports System.Text
 Imports System.Threading
+Imports System.Windows
 Imports System.Windows.Forms.VisualStyles.VisualStyleElement
 Imports System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar
 
@@ -88,12 +89,13 @@ Public Class VBTERMINALFORM
         PortData.Items.Add("Stop Bits = " & SerialPort1.StopBits)
         PortData.Items.Add("Parity = " & SerialPort1.Parity)
 
-        If TabControl1.SelectedIndex = 0 Then 'This is the settings tab
+        If TabControl.SelectedIndex = 0 Then 'This is the settings tab
             CheckForReceived()
-        ElseIf TabControl1.SelectedIndex = 1 Then 'This is the QY@ board tab
+        ElseIf TabControl.SelectedIndex = 1 Then
+            PICTabHandle()
+        ElseIf TabControl.SelectedIndex = 2 Then 'This is the QY@ board tab
             QYBoardTabHandle()
         End If
-
     End Sub
 
     'This is what will set the port when the user clicks on something in the Port Select
@@ -101,7 +103,6 @@ Public Class VBTERMINALFORM
         Try
             SerialPort1.Close() 'try to close port before change
         Catch ex As Exception
-
         End Try
         PortOpen.Text = "Connect"
         PortState = False
@@ -109,7 +110,6 @@ Public Class VBTERMINALFORM
             If SettingsButtonState = True Then SerialPort1.PortName = PortSelect.SelectedItem
             SerialPort1.BaudRate = PortSelect.SelectedItem 'see if Baud Rate data Is in the list box
         Catch ex As Exception
-
         End Try
     End Sub
 
@@ -131,7 +131,7 @@ Public Class VBTERMINALFORM
     End Sub
 
     'Handles the quit button
-    Private Sub QuitButton_Click(sender As Object, e As EventArgs) Handles QuitButton.Click, QuitButton2.Click
+    Private Sub QuitButton_Click(sender As Object, e As EventArgs) Handles QuitButton.Click, QuitButton2.Click, PICTabQuitButton.Click
         Try
             SerialPort1.Close()
             Close()
@@ -161,8 +161,8 @@ Public Class VBTERMINALFORM
                 Try
                     If CInt(DataTextBox.Text) <= 255 And CInt(DataTextBox.Text) >= 0 Then
 
-                        SerialPort1.Write({36, CInt(DataTextBox.Text)}, 0, 2)
-                        OutTerm.Items.Add("$" & "." & Hex(CInt(DataTextBox.Text)))
+                        SerialPort1.Write({36, CInt(DataTextBox.Text), CInt(CInt(DataTextBox.Text) / 2)}, 0, 3)
+                        OutTerm.Items.Add("$" & "." & Hex(CInt(DataTextBox.Text)) & "." & Hex(CInt(CInt(DataTextBox.Text) / 2)))
 
                     Else
                         MsgBox("Please use a value from 0 to 255.")
@@ -170,7 +170,7 @@ Public Class VBTERMINALFORM
                         DataTextBox.Text = ""
                     End If
                 Catch ex As Exception
-                    MsgBox("That input is invalid. Please use a decimal number from 0 to 255.")
+                    MsgBox("That input is invalid. Please use a decimal number from 0 - 255.")
                     DataTextBox.Select()
                     DataTextBox.Text = ""
                 End Try
@@ -190,15 +190,15 @@ Public Class VBTERMINALFORM
     End Sub
 
     'Handles output clear button click
-    Private Sub OutputClearButton_Click(sender As Object, e As EventArgs) Handles OutputClearButton.Click
+    Private Sub OutputClearButton_Click(sender As Object, e As EventArgs) Handles OutputClearButton.Click, PICTabOutListBoxClearButton.Click
         OutTerm.Items.Clear()
     End Sub
 
+
     'Handles input clear button click
-    Private Sub InputClearButton_Click(sender As Object, e As EventArgs) Handles InputClearButton.Click
+    Private Sub InputClearButton_Click(sender As Object, e As EventArgs) Handles InputClearButton.Click, PICTabInListBoxClearButton.Click
         InTerm.Items.Clear()
     End Sub
-
 
 
 
@@ -243,6 +243,43 @@ Public Class VBTERMINALFORM
 
     '*** Custom Subs ********************************************************************************************************************************************************************************
 
+    Sub PICTabHandle()
+        ServoStateLabel.Text = ServoStateTrackBar.Value
+        If PortState = True Then
+            Try
+                If ContinousSendRadioButton.Checked Then
+                    SerialPort1.Write({36, CInt(ServoStateTrackBar.Value), CInt(ServoStateTrackBar.Value / 2)}, 0, 3)
+                    OutTerm.Items.Add("$" & "." & Hex(CInt(ServoStateTrackBar.Value)) & "." & Hex(CInt(ServoStateTrackBar.Value / 2)))
+                ElseIf ManualSendRadioButton.Checked Then
+                    If ManualSendCheckBox.Checked Then
+                        SerialPort1.Write({36, CInt(ServoStateTrackBar.Value), CInt(ServoStateTrackBar.Value / 2)}, 0, 3)
+                        OutTerm.Items.Add("$" & "." & Hex(CInt(ServoStateTrackBar.Value)) & "." & Hex(CInt(ServoStateTrackBar.Value / 2)))
+                        ManualSendCheckBox.Checked = False
+                    End If
+                End If
+
+                PICTabOutListBox.Items.Clear()
+                If OutTerm.Items.Count <> -1 Then
+                    For i As Integer = 0 To OutTerm.Items.Count - 1
+                        PICTabOutListBox.Items.Add(OutTerm.Items(i))
+                    Next
+                End If
+
+                PICTabInListBox.Items.Clear()
+                If InTerm.Items.Count <> -1 Then
+                    For i As Integer = 0 To InTerm.Items.Count - 1
+                        PICTabInListBox.Items.Add(InTerm.Items(i))
+                    Next
+                End If
+
+            Catch ex As Exception
+
+            End Try
+        Else
+            PortIsBad()
+        End If
+        CheckForReceived()
+    End Sub
 
     Sub QYBoardTabHandle()
         If PortState = True Then
@@ -320,10 +357,10 @@ Public Class VBTERMINALFORM
                 QYATBoardSampleTime = 0
             Else
                 QYATBoardSampleTime += 1
-                End If
+            End If
 
-            Else
-                PortIsBad()
+        Else
+            PortIsBad()
         End If
     End Sub
 
@@ -413,7 +450,7 @@ Public Class VBTERMINALFORM
         SerialPort1.Close()
         PortOpen.Text = "Connect"
         PortState = False
-        TabControl1.SelectedIndex = 0
+        TabControl.SelectedIndex = 0
         ScanButton.Select()
         MsgBox("Please configure and open serial port to procede") 'Failure if port is not open
     End Sub

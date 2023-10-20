@@ -40,10 +40,21 @@ Partial Class VBTERMINALFORM
         Me.InTerm = New System.Windows.Forms.ListBox()
         Me.OutputClearButton = New System.Windows.Forms.Button()
         Me.InputClearButton = New System.Windows.Forms.Button()
-        Me.TabControl1 = New System.Windows.Forms.TabControl()
+        Me.TabControl = New System.Windows.Forms.TabControl()
         Me.SettingsTab = New System.Windows.Forms.TabPage()
         Me.DecimalRadioButton = New System.Windows.Forms.RadioButton()
         Me.ASCIIRadioButton = New System.Windows.Forms.RadioButton()
+        Me.PICTab = New System.Windows.Forms.TabPage()
+        Me.ManualSendCheckBox = New System.Windows.Forms.CheckBox()
+        Me.ServoStateLabel = New System.Windows.Forms.Label()
+        Me.PICTabInListBoxClearButton = New System.Windows.Forms.Button()
+        Me.PICTabOutListBoxClearButton = New System.Windows.Forms.Button()
+        Me.PICTabInListBox = New System.Windows.Forms.ListBox()
+        Me.PICTabOutListBox = New System.Windows.Forms.ListBox()
+        Me.PICTabQuitButton = New System.Windows.Forms.Button()
+        Me.ManualSendRadioButton = New System.Windows.Forms.RadioButton()
+        Me.ContinousSendRadioButton = New System.Windows.Forms.RadioButton()
+        Me.ServoStateTrackBar = New System.Windows.Forms.TrackBar()
         Me.QYTab = New System.Windows.Forms.TabPage()
         Me.AnalogInputGroupBox = New System.Windows.Forms.GroupBox()
         Me.AnalogInputBar = New System.Windows.Forms.TrackBar()
@@ -76,8 +87,10 @@ Partial Class VBTERMINALFORM
         Me.ReadDigitalCheckbox7 = New System.Windows.Forms.CheckBox()
         Me.ASCIITableTab = New System.Windows.Forms.TabPage()
         Me.ASCIITablePicturebox = New System.Windows.Forms.PictureBox()
-        Me.TabControl1.SuspendLayout()
+        Me.TabControl.SuspendLayout()
         Me.SettingsTab.SuspendLayout()
+        Me.PICTab.SuspendLayout()
+        CType(Me.ServoStateTrackBar, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.QYTab.SuspendLayout()
         Me.AnalogInputGroupBox.SuspendLayout()
         CType(Me.AnalogInputBar, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -220,16 +233,17 @@ Partial Class VBTERMINALFORM
         Me.InputClearButton.Text = "Clear"
         Me.InputClearButton.UseVisualStyleBackColor = True
         '
-        'TabControl1
+        'TabControl
         '
-        Me.TabControl1.Controls.Add(Me.SettingsTab)
-        Me.TabControl1.Controls.Add(Me.QYTab)
-        Me.TabControl1.Controls.Add(Me.ASCIITableTab)
-        Me.TabControl1.Location = New System.Drawing.Point(12, 12)
-        Me.TabControl1.Name = "TabControl1"
-        Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(905, 612)
-        Me.TabControl1.TabIndex = 16
+        Me.TabControl.Controls.Add(Me.SettingsTab)
+        Me.TabControl.Controls.Add(Me.PICTab)
+        Me.TabControl.Controls.Add(Me.QYTab)
+        Me.TabControl.Controls.Add(Me.ASCIITableTab)
+        Me.TabControl.Location = New System.Drawing.Point(12, 12)
+        Me.TabControl.Name = "TabControl"
+        Me.TabControl.SelectedIndex = 0
+        Me.TabControl.Size = New System.Drawing.Size(905, 612)
+        Me.TabControl.TabIndex = 16
         '
         'SettingsTab
         '
@@ -278,6 +292,127 @@ Partial Class VBTERMINALFORM
         Me.ASCIIRadioButton.TabIndex = 14
         Me.ASCIIRadioButton.Text = "ASCII Format"
         Me.ASCIIRadioButton.UseVisualStyleBackColor = True
+        '
+        'PICTab
+        '
+        Me.PICTab.Controls.Add(Me.ManualSendCheckBox)
+        Me.PICTab.Controls.Add(Me.ServoStateLabel)
+        Me.PICTab.Controls.Add(Me.PICTabInListBoxClearButton)
+        Me.PICTab.Controls.Add(Me.PICTabOutListBoxClearButton)
+        Me.PICTab.Controls.Add(Me.PICTabInListBox)
+        Me.PICTab.Controls.Add(Me.PICTabOutListBox)
+        Me.PICTab.Controls.Add(Me.PICTabQuitButton)
+        Me.PICTab.Controls.Add(Me.ManualSendRadioButton)
+        Me.PICTab.Controls.Add(Me.ContinousSendRadioButton)
+        Me.PICTab.Controls.Add(Me.ServoStateTrackBar)
+        Me.PICTab.ImeMode = System.Windows.Forms.ImeMode.Off
+        Me.PICTab.Location = New System.Drawing.Point(4, 25)
+        Me.PICTab.Name = "PICTab"
+        Me.PICTab.Padding = New System.Windows.Forms.Padding(3)
+        Me.PICTab.Size = New System.Drawing.Size(897, 583)
+        Me.PICTab.TabIndex = 3
+        Me.PICTab.Text = "PIC Tab"
+        Me.PICTab.UseVisualStyleBackColor = True
+        '
+        'ManualSendCheckBox
+        '
+        Me.ManualSendCheckBox.Appearance = System.Windows.Forms.Appearance.Button
+        Me.ManualSendCheckBox.Font = New System.Drawing.Font("Comic Sans MS", 13.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ManualSendCheckBox.Location = New System.Drawing.Point(679, 29)
+        Me.ManualSendCheckBox.Name = "ManualSendCheckBox"
+        Me.ManualSendCheckBox.Size = New System.Drawing.Size(212, 56)
+        Me.ManualSendCheckBox.TabIndex = 32
+        Me.ManualSendCheckBox.Text = "Send"
+        Me.ManualSendCheckBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.ManualSendCheckBox.UseVisualStyleBackColor = True
+        '
+        'ServoStateLabel
+        '
+        Me.ServoStateLabel.AutoSize = True
+        Me.ServoStateLabel.Location = New System.Drawing.Point(6, 10)
+        Me.ServoStateLabel.Name = "ServoStateLabel"
+        Me.ServoStateLabel.Size = New System.Drawing.Size(90, 16)
+        Me.ServoStateLabel.TabIndex = 31
+        Me.ServoStateLabel.Text = "Servo State: ?"
+        '
+        'PICTabInListBoxClearButton
+        '
+        Me.PICTabInListBoxClearButton.Location = New System.Drawing.Point(240, 471)
+        Me.PICTabInListBoxClearButton.Name = "PICTabInListBoxClearButton"
+        Me.PICTabInListBoxClearButton.Size = New System.Drawing.Size(160, 44)
+        Me.PICTabInListBoxClearButton.TabIndex = 30
+        Me.PICTabInListBoxClearButton.Text = "Clear"
+        Me.PICTabInListBoxClearButton.UseVisualStyleBackColor = True
+        '
+        'PICTabOutListBoxClearButton
+        '
+        Me.PICTabOutListBoxClearButton.Location = New System.Drawing.Point(6, 467)
+        Me.PICTabOutListBoxClearButton.Name = "PICTabOutListBoxClearButton"
+        Me.PICTabOutListBoxClearButton.Size = New System.Drawing.Size(160, 44)
+        Me.PICTabOutListBoxClearButton.TabIndex = 29
+        Me.PICTabOutListBoxClearButton.Text = "Clear"
+        Me.PICTabOutListBoxClearButton.UseVisualStyleBackColor = True
+        '
+        'PICTabInListBox
+        '
+        Me.PICTabInListBox.FormattingEnabled = True
+        Me.PICTabInListBox.ItemHeight = 16
+        Me.PICTabInListBox.Location = New System.Drawing.Point(240, 93)
+        Me.PICTabInListBox.Name = "PICTabInListBox"
+        Me.PICTabInListBox.Size = New System.Drawing.Size(228, 372)
+        Me.PICTabInListBox.TabIndex = 28
+        '
+        'PICTabOutListBox
+        '
+        Me.PICTabOutListBox.FormattingEnabled = True
+        Me.PICTabOutListBox.ItemHeight = 16
+        Me.PICTabOutListBox.Location = New System.Drawing.Point(6, 91)
+        Me.PICTabOutListBox.Name = "PICTabOutListBox"
+        Me.PICTabOutListBox.Size = New System.Drawing.Size(228, 372)
+        Me.PICTabOutListBox.TabIndex = 27
+        '
+        'PICTabQuitButton
+        '
+        Me.PICTabQuitButton.Location = New System.Drawing.Point(790, 532)
+        Me.PICTabQuitButton.Name = "PICTabQuitButton"
+        Me.PICTabQuitButton.Size = New System.Drawing.Size(101, 45)
+        Me.PICTabQuitButton.TabIndex = 25
+        Me.PICTabQuitButton.Text = "Quit"
+        Me.PICTabQuitButton.UseVisualStyleBackColor = True
+        '
+        'ManualSendRadioButton
+        '
+        Me.ManualSendRadioButton.AutoSize = True
+        Me.ManualSendRadioButton.Checked = True
+        Me.ManualSendRadioButton.Location = New System.Drawing.Point(551, 29)
+        Me.ManualSendRadioButton.Name = "ManualSendRadioButton"
+        Me.ManualSendRadioButton.Size = New System.Drawing.Size(107, 20)
+        Me.ManualSendRadioButton.TabIndex = 2
+        Me.ManualSendRadioButton.TabStop = True
+        Me.ManualSendRadioButton.Text = "Manual Send"
+        Me.ManualSendRadioButton.UseVisualStyleBackColor = True
+        '
+        'ContinousSendRadioButton
+        '
+        Me.ContinousSendRadioButton.AutoSize = True
+        Me.ContinousSendRadioButton.Location = New System.Drawing.Point(551, 55)
+        Me.ContinousSendRadioButton.Name = "ContinousSendRadioButton"
+        Me.ContinousSendRadioButton.Size = New System.Drawing.Size(122, 20)
+        Me.ContinousSendRadioButton.TabIndex = 1
+        Me.ContinousSendRadioButton.Text = "Continous Send"
+        Me.ContinousSendRadioButton.UseVisualStyleBackColor = True
+        '
+        'ServoStateTrackBar
+        '
+        Me.ServoStateTrackBar.BackColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.ServoStateTrackBar.Cursor = System.Windows.Forms.Cursors.NoMoveHoriz
+        Me.ServoStateTrackBar.Location = New System.Drawing.Point(6, 29)
+        Me.ServoStateTrackBar.Maximum = 20
+        Me.ServoStateTrackBar.Minimum = 1
+        Me.ServoStateTrackBar.Name = "ServoStateTrackBar"
+        Me.ServoStateTrackBar.Size = New System.Drawing.Size(539, 56)
+        Me.ServoStateTrackBar.TabIndex = 0
+        Me.ServoStateTrackBar.Value = 20
         '
         'QYTab
         '
@@ -658,12 +793,15 @@ Partial Class VBTERMINALFORM
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(919, 636)
-        Me.Controls.Add(Me.TabControl1)
+        Me.Controls.Add(Me.TabControl)
         Me.Name = "VBTERMINALFORM"
         Me.Text = "VB Terminal Form"
-        Me.TabControl1.ResumeLayout(False)
+        Me.TabControl.ResumeLayout(False)
         Me.SettingsTab.ResumeLayout(False)
         Me.SettingsTab.PerformLayout()
+        Me.PICTab.ResumeLayout(False)
+        Me.PICTab.PerformLayout()
+        CType(Me.ServoStateTrackBar, System.ComponentModel.ISupportInitialize).EndInit()
         Me.QYTab.ResumeLayout(False)
         Me.AnalogInputGroupBox.ResumeLayout(False)
         Me.AnalogInputGroupBox.PerformLayout()
@@ -695,7 +833,7 @@ Partial Class VBTERMINALFORM
     Friend WithEvents InTerm As ListBox
     Friend WithEvents OutputClearButton As Button
     Friend WithEvents InputClearButton As Button
-    Friend WithEvents TabControl1 As TabControl
+    Friend WithEvents TabControl As TabControl
     Friend WithEvents SettingsTab As TabPage
     Friend WithEvents QYTab As TabPage
     Friend WithEvents ReadDigitalCheckbox0 As CheckBox
@@ -731,4 +869,15 @@ Partial Class VBTERMINALFORM
     Friend WithEvents ASCIITableTab As TabPage
     Friend WithEvents ASCIITablePicturebox As PictureBox
     Friend WithEvents AnalogInputBar As TrackBar
+    Friend WithEvents PICTab As TabPage
+    Friend WithEvents ServoStateTrackBar As TrackBar
+    Friend WithEvents ManualSendRadioButton As RadioButton
+    Friend WithEvents ContinousSendRadioButton As RadioButton
+    Friend WithEvents PICTabQuitButton As Button
+    Friend WithEvents PICTabInListBoxClearButton As Button
+    Friend WithEvents PICTabOutListBoxClearButton As Button
+    Friend WithEvents PICTabInListBox As ListBox
+    Friend WithEvents PICTabOutListBox As ListBox
+    Friend WithEvents ServoStateLabel As Label
+    Friend WithEvents ManualSendCheckBox As CheckBox
 End Class
