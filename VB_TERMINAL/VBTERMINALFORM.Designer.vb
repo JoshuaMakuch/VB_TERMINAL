@@ -45,12 +45,13 @@ Partial Class VBTERMINALFORM
         Me.DecimalRadioButton = New System.Windows.Forms.RadioButton()
         Me.ASCIIRadioButton = New System.Windows.Forms.RadioButton()
         Me.PICTab = New System.Windows.Forms.TabPage()
+        Me.PICTabReceivedTextBoxLabel = New System.Windows.Forms.Label()
+        Me.PICTabAnalogInputBar = New System.Windows.Forms.TrackBar()
+        Me.PICTabAnalogInputVoltageLabel = New System.Windows.Forms.Label()
+        Me.PICTabAnalogInputValueLabel = New System.Windows.Forms.Label()
+        Me.PICTabAnalogInputBarLabel = New System.Windows.Forms.Label()
         Me.ManualSendCheckBox = New System.Windows.Forms.CheckBox()
         Me.ServoStateLabel = New System.Windows.Forms.Label()
-        Me.PICTabInListBoxClearButton = New System.Windows.Forms.Button()
-        Me.PICTabOutListBoxClearButton = New System.Windows.Forms.Button()
-        Me.PICTabInListBox = New System.Windows.Forms.ListBox()
-        Me.PICTabOutListBox = New System.Windows.Forms.ListBox()
         Me.PICTabQuitButton = New System.Windows.Forms.Button()
         Me.ManualSendRadioButton = New System.Windows.Forms.RadioButton()
         Me.ContinousSendRadioButton = New System.Windows.Forms.RadioButton()
@@ -87,9 +88,16 @@ Partial Class VBTERMINALFORM
         Me.ReadDigitalCheckbox7 = New System.Windows.Forms.CheckBox()
         Me.ASCIITableTab = New System.Windows.Forms.TabPage()
         Me.ASCIITablePicturebox = New System.Windows.Forms.PictureBox()
+        Me.PICTabReceivedTextBox = New System.Windows.Forms.TextBox()
+        Me.PICTabTransmittedDataTextBox = New System.Windows.Forms.TextBox()
+        Me.PICTabTransmittedTextBoxLabel = New System.Windows.Forms.Label()
+        Me.PICTabAnalogTemperatureBar = New System.Windows.Forms.TrackBar()
+        Me.PICTabAnalogTemperatureValueLabel = New System.Windows.Forms.Label()
+        Me.PICTabTemperatureBarLabel = New System.Windows.Forms.Label()
         Me.TabControl.SuspendLayout()
         Me.SettingsTab.SuspendLayout()
         Me.PICTab.SuspendLayout()
+        CType(Me.PICTabAnalogInputBar, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.ServoStateTrackBar, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.QYTab.SuspendLayout()
         Me.AnalogInputGroupBox.SuspendLayout()
@@ -100,6 +108,7 @@ Partial Class VBTERMINALFORM
         Me.ReadDigitalInputsGroupBox.SuspendLayout()
         Me.ASCIITableTab.SuspendLayout()
         CType(Me.ASCIITablePicturebox, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PICTabAnalogTemperatureBar, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'SerialPort1
@@ -295,12 +304,19 @@ Partial Class VBTERMINALFORM
         '
         'PICTab
         '
+        Me.PICTab.Controls.Add(Me.PICTabAnalogTemperatureBar)
+        Me.PICTab.Controls.Add(Me.PICTabAnalogTemperatureValueLabel)
+        Me.PICTab.Controls.Add(Me.PICTabTemperatureBarLabel)
+        Me.PICTab.Controls.Add(Me.PICTabTransmittedDataTextBox)
+        Me.PICTab.Controls.Add(Me.PICTabTransmittedTextBoxLabel)
+        Me.PICTab.Controls.Add(Me.PICTabReceivedTextBox)
+        Me.PICTab.Controls.Add(Me.PICTabReceivedTextBoxLabel)
+        Me.PICTab.Controls.Add(Me.PICTabAnalogInputBar)
+        Me.PICTab.Controls.Add(Me.PICTabAnalogInputVoltageLabel)
+        Me.PICTab.Controls.Add(Me.PICTabAnalogInputValueLabel)
+        Me.PICTab.Controls.Add(Me.PICTabAnalogInputBarLabel)
         Me.PICTab.Controls.Add(Me.ManualSendCheckBox)
         Me.PICTab.Controls.Add(Me.ServoStateLabel)
-        Me.PICTab.Controls.Add(Me.PICTabInListBoxClearButton)
-        Me.PICTab.Controls.Add(Me.PICTabOutListBoxClearButton)
-        Me.PICTab.Controls.Add(Me.PICTabInListBox)
-        Me.PICTab.Controls.Add(Me.PICTabOutListBox)
         Me.PICTab.Controls.Add(Me.PICTabQuitButton)
         Me.PICTab.Controls.Add(Me.ManualSendRadioButton)
         Me.PICTab.Controls.Add(Me.ContinousSendRadioButton)
@@ -313,6 +329,53 @@ Partial Class VBTERMINALFORM
         Me.PICTab.TabIndex = 3
         Me.PICTab.Text = "PIC Tab"
         Me.PICTab.UseVisualStyleBackColor = True
+        '
+        'PICTabReceivedTextBoxLabel
+        '
+        Me.PICTabReceivedTextBoxLabel.AutoSize = True
+        Me.PICTabReceivedTextBoxLabel.Location = New System.Drawing.Point(3, 450)
+        Me.PICTabReceivedTextBoxLabel.Name = "PICTabReceivedTextBoxLabel"
+        Me.PICTabReceivedTextBoxLabel.Size = New System.Drawing.Size(101, 16)
+        Me.PICTabReceivedTextBoxLabel.TabIndex = 37
+        Me.PICTabReceivedTextBoxLabel.Text = "Received Data:"
+        '
+        'PICTabAnalogInputBar
+        '
+        Me.PICTabAnalogInputBar.BackColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.PICTabAnalogInputBar.Enabled = False
+        Me.PICTabAnalogInputBar.Location = New System.Drawing.Point(6, 111)
+        Me.PICTabAnalogInputBar.Maximum = 1023
+        Me.PICTabAnalogInputBar.Name = "PICTabAnalogInputBar"
+        Me.PICTabAnalogInputBar.Orientation = System.Windows.Forms.Orientation.Vertical
+        Me.PICTabAnalogInputBar.Size = New System.Drawing.Size(56, 336)
+        Me.PICTabAnalogInputBar.TabIndex = 33
+        '
+        'PICTabAnalogInputVoltageLabel
+        '
+        Me.PICTabAnalogInputVoltageLabel.AutoSize = True
+        Me.PICTabAnalogInputVoltageLabel.Location = New System.Drawing.Point(68, 127)
+        Me.PICTabAnalogInputVoltageLabel.Name = "PICTabAnalogInputVoltageLabel"
+        Me.PICTabAnalogInputVoltageLabel.Size = New System.Drawing.Size(131, 16)
+        Me.PICTabAnalogInputVoltageLabel.TabIndex = 36
+        Me.PICTabAnalogInputVoltageLabel.Text = "Analog Input Voltage"
+        '
+        'PICTabAnalogInputValueLabel
+        '
+        Me.PICTabAnalogInputValueLabel.AutoSize = True
+        Me.PICTabAnalogInputValueLabel.Location = New System.Drawing.Point(68, 111)
+        Me.PICTabAnalogInputValueLabel.Name = "PICTabAnalogInputValueLabel"
+        Me.PICTabAnalogInputValueLabel.Size = New System.Drawing.Size(119, 16)
+        Me.PICTabAnalogInputValueLabel.TabIndex = 35
+        Me.PICTabAnalogInputValueLabel.Text = "Analog Input Value"
+        '
+        'PICTabAnalogInputBarLabel
+        '
+        Me.PICTabAnalogInputBarLabel.AutoSize = True
+        Me.PICTabAnalogInputBarLabel.Location = New System.Drawing.Point(3, 92)
+        Me.PICTabAnalogInputBarLabel.Name = "PICTabAnalogInputBarLabel"
+        Me.PICTabAnalogInputBarLabel.Size = New System.Drawing.Size(91, 16)
+        Me.PICTabAnalogInputBarLabel.TabIndex = 34
+        Me.PICTabAnalogInputBarLabel.Text = "Analog Input 1"
         '
         'ManualSendCheckBox
         '
@@ -334,42 +397,6 @@ Partial Class VBTERMINALFORM
         Me.ServoStateLabel.Size = New System.Drawing.Size(90, 16)
         Me.ServoStateLabel.TabIndex = 31
         Me.ServoStateLabel.Text = "Servo State: ?"
-        '
-        'PICTabInListBoxClearButton
-        '
-        Me.PICTabInListBoxClearButton.Location = New System.Drawing.Point(240, 471)
-        Me.PICTabInListBoxClearButton.Name = "PICTabInListBoxClearButton"
-        Me.PICTabInListBoxClearButton.Size = New System.Drawing.Size(160, 44)
-        Me.PICTabInListBoxClearButton.TabIndex = 30
-        Me.PICTabInListBoxClearButton.Text = "Clear"
-        Me.PICTabInListBoxClearButton.UseVisualStyleBackColor = True
-        '
-        'PICTabOutListBoxClearButton
-        '
-        Me.PICTabOutListBoxClearButton.Location = New System.Drawing.Point(6, 467)
-        Me.PICTabOutListBoxClearButton.Name = "PICTabOutListBoxClearButton"
-        Me.PICTabOutListBoxClearButton.Size = New System.Drawing.Size(160, 44)
-        Me.PICTabOutListBoxClearButton.TabIndex = 29
-        Me.PICTabOutListBoxClearButton.Text = "Clear"
-        Me.PICTabOutListBoxClearButton.UseVisualStyleBackColor = True
-        '
-        'PICTabInListBox
-        '
-        Me.PICTabInListBox.FormattingEnabled = True
-        Me.PICTabInListBox.ItemHeight = 16
-        Me.PICTabInListBox.Location = New System.Drawing.Point(240, 93)
-        Me.PICTabInListBox.Name = "PICTabInListBox"
-        Me.PICTabInListBox.Size = New System.Drawing.Size(228, 372)
-        Me.PICTabInListBox.TabIndex = 28
-        '
-        'PICTabOutListBox
-        '
-        Me.PICTabOutListBox.FormattingEnabled = True
-        Me.PICTabOutListBox.ItemHeight = 16
-        Me.PICTabOutListBox.Location = New System.Drawing.Point(6, 91)
-        Me.PICTabOutListBox.Name = "PICTabOutListBox"
-        Me.PICTabOutListBox.Size = New System.Drawing.Size(228, 372)
-        Me.PICTabOutListBox.TabIndex = 27
         '
         'PICTabQuitButton
         '
@@ -788,6 +815,58 @@ Partial Class VBTERMINALFORM
         Me.ASCIITablePicturebox.TabIndex = 17
         Me.ASCIITablePicturebox.TabStop = False
         '
+        'PICTabReceivedTextBox
+        '
+        Me.PICTabReceivedTextBox.Location = New System.Drawing.Point(6, 469)
+        Me.PICTabReceivedTextBox.Name = "PICTabReceivedTextBox"
+        Me.PICTabReceivedTextBox.Size = New System.Drawing.Size(227, 22)
+        Me.PICTabReceivedTextBox.TabIndex = 38
+        '
+        'PICTabTransmittedDataTextBox
+        '
+        Me.PICTabTransmittedDataTextBox.Location = New System.Drawing.Point(6, 522)
+        Me.PICTabTransmittedDataTextBox.Name = "PICTabTransmittedDataTextBox"
+        Me.PICTabTransmittedDataTextBox.Size = New System.Drawing.Size(227, 22)
+        Me.PICTabTransmittedDataTextBox.TabIndex = 40
+        '
+        'PICTabTransmittedTextBoxLabel
+        '
+        Me.PICTabTransmittedTextBoxLabel.AutoSize = True
+        Me.PICTabTransmittedTextBoxLabel.Location = New System.Drawing.Point(3, 503)
+        Me.PICTabTransmittedTextBoxLabel.Name = "PICTabTransmittedTextBoxLabel"
+        Me.PICTabTransmittedTextBoxLabel.Size = New System.Drawing.Size(116, 16)
+        Me.PICTabTransmittedTextBoxLabel.TabIndex = 39
+        Me.PICTabTransmittedTextBoxLabel.Text = "Transmitted Data: "
+        '
+        'PICTabAnalogTemperatureBar
+        '
+        Me.PICTabAnalogTemperatureBar.BackColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.PICTabAnalogTemperatureBar.Enabled = False
+        Me.PICTabAnalogTemperatureBar.Location = New System.Drawing.Point(223, 111)
+        Me.PICTabAnalogTemperatureBar.Maximum = 1023
+        Me.PICTabAnalogTemperatureBar.Name = "PICTabAnalogTemperatureBar"
+        Me.PICTabAnalogTemperatureBar.Orientation = System.Windows.Forms.Orientation.Vertical
+        Me.PICTabAnalogTemperatureBar.Size = New System.Drawing.Size(56, 336)
+        Me.PICTabAnalogTemperatureBar.TabIndex = 41
+        '
+        'PICTabAnalogTemperatureValueLabel
+        '
+        Me.PICTabAnalogTemperatureValueLabel.AutoSize = True
+        Me.PICTabAnalogTemperatureValueLabel.Location = New System.Drawing.Point(285, 111)
+        Me.PICTabAnalogTemperatureValueLabel.Name = "PICTabAnalogTemperatureValueLabel"
+        Me.PICTabAnalogTemperatureValueLabel.Size = New System.Drawing.Size(169, 16)
+        Me.PICTabAnalogTemperatureValueLabel.TabIndex = 43
+        Me.PICTabAnalogTemperatureValueLabel.Text = "Analog Temperature Value"
+        '
+        'PICTabTemperatureBarLabel
+        '
+        Me.PICTabTemperatureBarLabel.AutoSize = True
+        Me.PICTabTemperatureBarLabel.Location = New System.Drawing.Point(220, 92)
+        Me.PICTabTemperatureBarLabel.Name = "PICTabTemperatureBarLabel"
+        Me.PICTabTemperatureBarLabel.Size = New System.Drawing.Size(85, 16)
+        Me.PICTabTemperatureBarLabel.TabIndex = 42
+        Me.PICTabTemperatureBarLabel.Text = "Temperature"
+        '
         'VBTERMINALFORM
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
@@ -801,6 +880,7 @@ Partial Class VBTERMINALFORM
         Me.SettingsTab.PerformLayout()
         Me.PICTab.ResumeLayout(False)
         Me.PICTab.PerformLayout()
+        CType(Me.PICTabAnalogInputBar, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.ServoStateTrackBar, System.ComponentModel.ISupportInitialize).EndInit()
         Me.QYTab.ResumeLayout(False)
         Me.AnalogInputGroupBox.ResumeLayout(False)
@@ -813,6 +893,7 @@ Partial Class VBTERMINALFORM
         Me.ReadDigitalInputsGroupBox.ResumeLayout(False)
         Me.ASCIITableTab.ResumeLayout(False)
         CType(Me.ASCIITablePicturebox, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PICTabAnalogTemperatureBar, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -874,10 +955,17 @@ Partial Class VBTERMINALFORM
     Friend WithEvents ManualSendRadioButton As RadioButton
     Friend WithEvents ContinousSendRadioButton As RadioButton
     Friend WithEvents PICTabQuitButton As Button
-    Friend WithEvents PICTabInListBoxClearButton As Button
-    Friend WithEvents PICTabOutListBoxClearButton As Button
-    Friend WithEvents PICTabInListBox As ListBox
-    Friend WithEvents PICTabOutListBox As ListBox
     Friend WithEvents ServoStateLabel As Label
     Friend WithEvents ManualSendCheckBox As CheckBox
+    Friend WithEvents PICTabAnalogInputBar As TrackBar
+    Friend WithEvents PICTabAnalogInputVoltageLabel As Label
+    Friend WithEvents PICTabAnalogInputValueLabel As Label
+    Friend WithEvents PICTabAnalogInputBarLabel As Label
+    Friend WithEvents PICTabReceivedTextBoxLabel As Label
+    Friend WithEvents PICTabReceivedTextBox As TextBox
+    Friend WithEvents PICTabTransmittedDataTextBox As TextBox
+    Friend WithEvents PICTabTransmittedTextBoxLabel As Label
+    Friend WithEvents PICTabAnalogTemperatureBar As TrackBar
+    Friend WithEvents PICTabAnalogTemperatureValueLabel As Label
+    Friend WithEvents PICTabTemperatureBarLabel As Label
 End Class

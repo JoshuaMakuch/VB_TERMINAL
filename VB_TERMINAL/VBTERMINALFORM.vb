@@ -4,6 +4,7 @@
 'VB Terminal Form
 'https://github.com/JoshuaMakuch/VB_TERMINAL
 
+Imports System.ComponentModel
 Imports System.IO
 Imports System.IO.Ports
 Imports System.Runtime.InteropServices
@@ -23,6 +24,8 @@ Public Class VBTERMINALFORM
     Dim DataIn1, DataIn2, DataIn3, DataIn4, DataIn5, DataIn6, DataIn7, DataIn8 As Integer
     Dim SettingsButtonState As Boolean
     Dim QYATBoardSampleTime As Integer
+    Dim PICSampleTime As Integer
+    Dim ReceiveByteAsString As String = ""
 
 
     'On Form unload, close the port as to not have it stuck open and inaccessible
@@ -89,9 +92,11 @@ Public Class VBTERMINALFORM
         PortData.Items.Add("Stop Bits = " & SerialPort1.StopBits)
         PortData.Items.Add("Parity = " & SerialPort1.Parity)
 
+        PICTabReceivedTextBox.Text = "Received Byte Array: " & ReceiveByteAsString
+
         If TabControl.SelectedIndex = 0 Then 'This is the settings tab
             CheckForReceived()
-        ElseIf TabControl.SelectedIndex = 1 Then
+        ElseIf TabControl.SelectedIndex = 1 Then 'This is the PIC tab
             PICTabHandle()
         ElseIf TabControl.SelectedIndex = 2 Then 'This is the QY@ board tab
             QYBoardTabHandle()
@@ -190,13 +195,13 @@ Public Class VBTERMINALFORM
     End Sub
 
     'Handles output clear button click
-    Private Sub OutputClearButton_Click(sender As Object, e As EventArgs) Handles OutputClearButton.Click, PICTabOutListBoxClearButton.Click
+    Private Sub OutputClearButton_Click(sender As Object, e As EventArgs) Handles OutputClearButton.Click
         OutTerm.Items.Clear()
     End Sub
 
 
     'Handles input clear button click
-    Private Sub InputClearButton_Click(sender As Object, e As EventArgs) Handles InputClearButton.Click, PICTabInListBoxClearButton.Click
+    Private Sub InputClearButton_Click(sender As Object, e As EventArgs) Handles InputClearButton.Click
         InTerm.Items.Clear()
     End Sub
 
@@ -210,31 +215,41 @@ Public Class VBTERMINALFORM
     'Whenever the com port says we have information
     Private Sub SerialPort1_DataReceived(sender As Object, e As SerialDataReceivedEventArgs) Handles SerialPort1.DataReceived
 
-        SerialPort1.Read(receiveByte, 0, 8) 'This receives new data from th serial port
+        'This allows the input buffer to be filled, once it has `10mS later, it will push the data to receivebyte()
+        Thread.Sleep(10)
+        ReceiveByteAsString = ""
+        SerialPort1.Read(receiveByte, 0, 8) 'This receives new data from the serial port
+
+        'This turns the receive byte into a string enumerated by a '.'
+        For i As Integer = 0 To 2
+            ReceiveByteAsString = ReceiveByteAsString & Hex(receiveByte(i)) & "."
+        Next
 
         Select Case NewData
             Case = 0
                 DataIn1 = receiveByte(0)
             Case = 1
-                DataIn2 = receiveByte(1)
+                DataIn2 = receiveByte(0)
             Case = 2
-                DataIn3 = receiveByte(2)
+                DataIn3 = receiveByte(0)
             Case = 3
-                DataIn4 = receiveByte(3)
+                DataIn4 = receiveByte(0)
             Case = 4
-                DataIn5 = receiveByte(4)
+                DataIn5 = receiveByte(0)
             Case = 5
-                DataIn6 = receiveByte(5)
+                DataIn6 = receiveByte(0)
             Case = 6
-                DataIn7 = receiveByte(6)
+                DataIn7 = receiveByte(0)
             Case = 7
-                DataIn8 = receiveByte(7)
+                DataIn8 = receiveByte(0)
             Case Else
                 NewData = 0
                 Exit Sub
         End Select
 
         NewData += 1
+
+        SerialPort1.DiscardInBuffer()
 
     End Sub
 
@@ -243,44 +258,50 @@ Public Class VBTERMINALFORM
 
     '*** Custom Subs ********************************************************************************************************************************************************************************
 
+    'This is used to handle the PIC tab
     Sub PICTabHandle()
-        ServoStateLabel.Text = ServoStateTrackBar.Value
+
+        ServoStateLabel.Text = "Servo State: " & ServoStateTrackBar.Value
+
         If PortState = True Then
             Try
-                If ContinousSendRadioButton.Checked Then
-                    SerialPort1.Write({36, CInt(ServoStateTrackBar.Value), CInt(ServoStateTrackBar.Value / 2)}, 0, 3)
-                    OutTerm.Items.Add("$" & "." & Hex(CInt(ServoStateTrackBar.Value)) & "." & Hex(CInt(ServoStateTrackBar.Value / 2)))
-                ElseIf ManualSendRadioButton.Checked Then
+                If ContinousSendRadioButton.Checked Then 'If continous, keep sending a handshake byte, servo data byte, and ADC begin conversion byte.
+                    SerialPort1.Write({36, CInt(ServoStateTrackBar.Value), 1}, 0, 3)
+                    OutTerm.Items.Add("$" & "." & Hex(CInt(ServoStateTrackBar.Value)) & "." & "1")
+                ElseIf ManualSendRadioButton.Checked Then 'If manual, poll the send checkbox and send the same info as above
                     If ManualSendCheckBox.Checked Then
-                        SerialPort1.Write({36, CInt(ServoStateTrackBar.Value), CInt(ServoStateTrackBar.Value / 2)}, 0, 3)
-                        OutTerm.Items.Add("$" & "." & Hex(CInt(ServoStateTrackBar.Value)) & "." & Hex(CInt(ServoStateTrackBar.Value / 2)))
+                        SerialPort1.Write({36, CInt(ServoStateTrackBar.Value), 1}, 0, 3)
+                        OutTerm.Items.Add("$" & "." & Hex(CInt(ServoStateTrackBar.Value)) & "." & "1")
                         ManualSendCheckBox.Checked = False
                     End If
                 End If
 
-                PICTabOutListBox.Items.Clear()
-                If OutTerm.Items.Count <> -1 Then
-                    For i As Integer = 0 To OutTerm.Items.Count - 1
-                        PICTabOutListBox.Items.Add(OutTerm.Items(i))
-                    Next
-                End If
-
-                PICTabInListBox.Items.Clear()
-                If InTerm.Items.Count <> -1 Then
-                    For i As Integer = 0 To InTerm.Items.Count - 1
-                        PICTabInListBox.Items.Add(InTerm.Items(i))
-                    Next
-                End If
+                PICTabTransmittedDataTextBox.Text = "$" & "." & Hex(CInt(ServoStateTrackBar.Value)) & "." & "1"
+                Thread.Sleep(10)
 
             Catch ex As Exception
 
             End Try
+
         Else
             PortIsBad()
         End If
-        CheckForReceived()
+
+        'This will try to pull the data from the receive byte and push it to the visual indicators on the tab.
+        Try
+            Dim AnaInVal As Integer = (Convert.ToInt32(Hex(receiveByte(1)), 16)) * 256 + (Convert.ToInt32(Hex(receiveByte(2)), 16))
+            PICTabAnalogInputBar.Value = AnaInVal
+            PICTabAnalogInputValueLabel.Text = AnaInVal
+            PICTabAnalogInputVoltageLabel.Text = CStr(Math.Round(AnaInVal * 3.3 / 1023, 2)) & " V"
+            PICTabAnalogTemperatureBar.Value = AnaInVal
+            PICTabAnalogTemperatureValueLabel.Text = CStr(AnaInVal * 0.5) & " °F"
+        Catch ex As Exception
+
+        End Try
+
     End Sub
 
+    'This is used to handle the QY@ board tab
     Sub QYBoardTabHandle()
         If PortState = True Then
             '*** Read Digital Inputs **************************************************************
@@ -445,7 +466,7 @@ Public Class VBTERMINALFORM
 
     End Function
 
-    'This is called alot so it was put into a sub
+    'This is called a lot so it was put into a sub. This will close the serial port and set all appropriate parameters
     Private Sub PortIsBad()
         SerialPort1.Close()
         PortOpen.Text = "Connect"
